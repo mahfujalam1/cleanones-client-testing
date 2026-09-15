@@ -7,7 +7,7 @@ import type { ChatMessage, ChatAttachment } from "@/redux/apis/chat";
 let socketInstance: Socket | null = null;
 let currentToken: string | null = null;
 
-export function getSocketBaseUrl(): string {
+function getBackendSocketOrigin(): string {
   if (apiHost) return apiHost;
   if (targetApi) {
     try {
@@ -16,6 +16,26 @@ export function getSocketBaseUrl(): string {
       return targetApi.replace(/\/api\/v1\/?$/, "").replace(/\/$/, "");
     }
   }
+  return "";
+}
+
+/**
+ * HTTPS pages cannot open ws:// to an HTTP backend (mixed content).
+ * In that case connect to this app origin so Next.js can proxy /socket.io.
+ */
+function shouldProxySocket(): boolean {
+  const origin = getBackendSocketOrigin();
+  return (
+    typeof window !== "undefined" &&
+    window.location.protocol === "https:" &&
+    origin.startsWith("http:")
+  );
+}
+
+export function getSocketBaseUrl(): string {
+  if (shouldProxySocket()) return window.location.origin;
+  const origin = getBackendSocketOrigin();
+  if (origin) return origin;
   if (typeof window !== "undefined") return window.location.origin;
   return "";
 }
@@ -47,12 +67,15 @@ export async function getChatSocket(): Promise<Socket | null> {
 
   currentToken = token;
   const baseUrl = getSocketBaseUrl();
+  const proxied = shouldProxySocket();
 
   const socket = io(baseUrl, {
     path: "/socket.io",
     auth: { token },
     query: { token },
-    transports: ["websocket", "polling"],
+    // Vercel cannot upgrade WebSockets to an HTTP origin; polling stays on HTTPS.
+    transports: proxied ? ["polling"] : ["websocket", "polling"],
+    upgrade: !proxied,
     reconnection: true,
     reconnectionAttempts: 10,
     reconnectionDelay: 1000,

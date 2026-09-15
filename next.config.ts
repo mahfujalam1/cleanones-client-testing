@@ -15,6 +15,7 @@ const targetUrl = (() => {
     return null;
   }
 })();
+const backendOrigin = targetUrl?.origin ?? "";
 
 const nextConfig: NextConfig = {
   turbopack: {},
@@ -47,6 +48,18 @@ const nextConfig: NextConfig = {
         source: "/api/proxy/:path*",
         destination: `${backendUrl}/:path*`,
       },
+      ...(backendOrigin
+        ? [
+            {
+              source: "/socket.io",
+              destination: `${backendOrigin}/socket.io`,
+            },
+            {
+              source: "/socket.io/:path*",
+              destination: `${backendOrigin}/socket.io/:path*`,
+            },
+          ]
+        : []),
     ];
   },
 };
