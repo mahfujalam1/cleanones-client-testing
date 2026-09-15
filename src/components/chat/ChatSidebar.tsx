@@ -5,70 +5,27 @@ import { MdBusiness, MdEngineering, MdGroups, MdSearch } from "react-icons/md";
 import type { ChatItem } from "@/redux/apis/chat";
 import { DetailSkeleton, formatMessageTime } from "./chatUtils";
 
-export type ChatTab = "all" | "group" | "client" | "worker";
-
 interface ChatSidebarProps {
-  activeTab: ChatTab;
-  tabCounts: { all: number; group: number; client: number; worker: number };
   query: string;
   chats: ChatItem[];
   selectedId: string | null;
   loading: boolean;
-  onTabChange: (tab: ChatTab) => void;
   onQueryChange: (q: string) => void;
   onSelectChat: (chat: ChatItem) => void;
   isChatOnline: (chat: ChatItem) => boolean;
 }
 
 export function ChatSidebar({
-  activeTab,
-  tabCounts,
   query,
   chats,
   selectedId,
   loading,
-  onTabChange,
   onQueryChange,
   onSelectChat,
   isChatOnline,
 }: ChatSidebarProps) {
   return (
     <aside className="flex h-full min-h-0 flex-col border-r border-slate-200/90">
-      <div className="p-2.5 border-b border-slate-100 bg-white">
-        <div className="grid grid-cols-4 gap-1 rounded-lg border border-slate-200 bg-slate-50/80 p-1">
-          {(
-            [
-              ["all", "All", tabCounts.all],
-              ["group", "Groups", tabCounts.group],
-              ["client", "Clients", tabCounts.client],
-              ["worker", "Workers", tabCounts.worker],
-            ] as const
-          ).map(([id, label, count]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => onTabChange(id)}
-              className={`flex items-center justify-center gap-1 rounded-md py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                activeTab === id
-                  ? "bg-white text-primary shadow-xs border border-slate-200/80 font-bold"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
-              }`}
-            >
-              <span>{label}</span>
-              {count > 0 && (
-                <span
-                  className={`text-[10px] px-1 rounded-full font-bold ${
-                    activeTab === id ? "bg-sky-50 text-primary" : "text-slate-400"
-                  }`}
-                >
-                  {count}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="border-b border-slate-100 p-2.5">
         <div className="relative">
           <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
@@ -147,7 +104,7 @@ export function ChatSidebar({
           })
         ) : (
           <div className="py-16 text-center text-xs text-slate-400">
-            No conversations found in this tab.
+            No conversations found.
           </div>
         )}
       </div>

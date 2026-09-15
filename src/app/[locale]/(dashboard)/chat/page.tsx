@@ -2,9 +2,11 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Socket } from "socket.io-client";
+import { useParams } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import { getAccessToken } from "@/redux/baseApi";
 import { useGetMyProfileQuery } from "@/redux/apis/profile";
+import { getTranslation } from "@/utils/translations";
 import {
   useGetMyChatsQuery,
   useGetChatMembersQuery,
@@ -24,7 +26,7 @@ import {
   sendStopTypingIndicator,
 } from "@/lib/socket/chatSocket";
 import { ChatMembersPanel } from "@/components/chat/ChatMembersPanel";
-import { ChatSidebar, type ChatTab } from "@/components/chat/ChatSidebar";
+import { ChatSidebar } from "@/components/chat/ChatSidebar";
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { ChatMessageList } from "@/components/chat/ChatMessageList";
 import { ChatMessageInput } from "@/components/chat/ChatMessageInput";
@@ -52,9 +54,10 @@ function decodeUserIdFromToken(): string {
 }
 
 export default function ChatPage() {
+  const { locale = "en" } = useParams<{ locale: string }>();
+  const t = getTranslation(locale);
   const user = useAppSelector((state) => state.auth.user);
   const { data: profileRes } = useGetMyProfileQuery();
-  const [activeTab, setActiveTab] = useState<ChatTab>("all");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -276,38 +279,15 @@ export default function ChatPage() {
     setMobileThreadOpen(false);
   };
 
-  const tabCounts = useMemo(
-    () => ({
-      all: rawChats.length,
-      group: rawChats.filter((c: ChatItem) => c.type === "group").length,
-      client: rawChats.filter((c: ChatItem) => c.type === "client").length,
-      worker: rawChats.filter((c: ChatItem) => c.type === "worker").length,
-    }),
-    [rawChats]
-  );
-
-  const handleTabChange = (tab: ChatTab) => {
-    setActiveTab(tab);
-    const tabChats = tab === "all" ? rawChats : rawChats.filter((c: ChatItem) => c.type === tab);
-    if (tabChats.length > 0 && (!selectedId || !tabChats.some((c: ChatItem) => c._id === selectedId))) {
-      // Keep list view on mobile when switching tabs — don't jump into a thread
-      selectChat(tabChats[0]);
-    }
-  };
-
   const filteredChats = useMemo(() => {
-    let list = rawChats;
-    if (activeTab !== "all") {
-      list = list.filter((chat: ChatItem) => chat.type === activeTab);
-    }
     const q = query.trim().toLowerCase();
-    if (!q) return list;
-    return list.filter((chat: ChatItem) => {
+    if (!q) return rawChats;
+    return rawChats.filter((chat: ChatItem) => {
       const displayName = (chat.display_name || chat.name || "").toLowerCase();
       const lastMsg = (chat.last_message?.text || "").toLowerCase();
       return displayName.includes(q) || lastMsg.includes(q);
     });
-  }, [rawChats, activeTab, query]);
+  }, [rawChats, query]);
 
   const handleInputChange = (text: string) => {
     setInputText(text);
@@ -451,10 +431,8 @@ export default function ChatPage() {
   return (
     <div className="flex h-[calc(100dvh-6.5rem)] min-h-0 flex-col gap-3 sm:min-h-[580px]">
       <header className={mobileThreadOpen ? "hidden lg:block" : "block"}>
-        <h1 className="text-lg font-bold text-slate-900">Conversations & Team Chat</h1>
-        <p className="text-xs text-slate-500">
-          Realtime messaging with CleanOnes managers and cleaning teams.
-        </p>
+        <h1 className="text-lg font-bold text-slate-900">{t.chat.pageTitle}</h1>
+        <p className="text-xs text-slate-500">{t.chat.subtitle}</p>
       </header>
 
       <div className="grid min-h-0 flex-1 overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[310px_minmax(0,1fr)_270px]">
@@ -465,13 +443,10 @@ export default function ChatPage() {
           }`}
         >
           <ChatSidebar
-            activeTab={activeTab}
-            tabCounts={tabCounts}
             query={query}
             chats={filteredChats}
             selectedId={selectedId}
             loading={loadingChats}
-            onTabChange={handleTabChange}
             onQueryChange={setQuery}
             onSelectChat={handleSelectChat}
             isChatOnline={isChatOnline}

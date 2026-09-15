@@ -130,6 +130,7 @@ export interface TranslationDict {
     title: string; typeMessage: string; send: string; activeConversations: string;
     supervisor: string; online: string; offline: string; noMessages: string;
     conversation: string; participants: string; selectConversation: string; selectConversationDesc: string;
+    pageTitle: string; subtitle: string;
   };
   profile: {
     title: string; personalInfo: string; name: string; email: string; phone: string;
@@ -282,6 +283,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Type your message here...", send: "Send", activeConversations: "CleanOnes",
       supervisor: "Operations Supervisor", online: "Online", offline: "Offline", noMessages: "Start a conversation with your supervisor",
       conversation: "Conversation", participants: "PARTICIPANTS", selectConversation: "Select a conversation", selectConversationDesc: "Choose a conversation to view messages.",
+      pageTitle: "Conversations & Team Chat", subtitle: "Realtime messaging with CleanOnes managers and cleaning teams.",
     },
     profile: {
       title: "User Profile", personalInfo: "Personal Information", name: "Full Name", email: "Email Address", phone: "Phone Number",
@@ -439,6 +441,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Typ hier uw bericht...", send: "Versturen", activeConversations: "CleanOnes",
       supervisor: "Operationeel Leidinggevende", online: "Online", offline: "Offline", noMessages: "Start een gesprek met uw leidinggevende",
       conversation: "Gesprek", participants: "DEELNEMERS", selectConversation: "Selecteer een gesprek", selectConversationDesc: "Kies een gesprek om berichten te bekijken.",
+      pageTitle: "Gesprekken & Teamchat", subtitle: "Realtime berichten met CleanOnes managers en schoonmaakteams.",
     },
     profile: {
       title: "Gebruikersprofiel", personalInfo: "Persoonlijke informatie", name: "Volledige naam", email: "E-mailadres", phone: "Telefoonnummer",
@@ -594,6 +597,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Wpisz tutaj swoją wiadomość...", send: "Wyślij", activeConversations: "CleanOnes",
       supervisor: "Nadzorca Operacyjny", online: "Online", offline: "Offline", noMessages: "Rozpocznij rozmowę z nadzorcą",
       conversation: "Rozmowa", participants: "UCZESTNICY", selectConversation: "Wybierz rozmowę", selectConversationDesc: "Wybierz rozmowę, aby zobaczyć wiadomości.",
+      pageTitle: "Rozmowy i czat zespołowy", subtitle: "Wiadomości w czasie rzeczywistym z menedżerami CleanOnes i zespołami sprzątającymi.",
     },
     profile: {
       title: "Profil Użytkownika", personalInfo: "Informacje osobiste", name: "Imię i nazwisko", email: "Adres e-mail", phone: "Numer telefonu",
@@ -749,6 +753,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Введіть ваше повідомлення...", send: "Надіслати", activeConversations: "CleanOnes",
       supervisor: "Операційний Супервайзер", online: "В мережі", offline: "Поза мережею", noMessages: "Розпочніть розмову з супервайзером",
       conversation: "Розмова", participants: "УЧАСНИКИ", selectConversation: "Оберіть розмову", selectConversationDesc: "Оберіть розмову для перегляду повідомлень.",
+      pageTitle: "Розмови та командний чат", subtitle: "Повідомлення в реальному часі з менеджерами CleanOnes та командами прибирання.",
     },
     profile: {
       title: "Профіль Користувача", personalInfo: "Особиста інформація", name: "Повне ім'я", email: "Email адреса", phone: "Номер телефону",
@@ -904,6 +909,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Escreva a sua mensagem aqui...", send: "Enviar", activeConversations: "CleanOnes",
       supervisor: "Supervisor de Operações", online: "Online", offline: "Offline", noMessages: "Inicie uma conversa com o seu supervisor",
       conversation: "Conversa", participants: "PARTICIPANTES", selectConversation: "Selecionar uma conversa", selectConversationDesc: "Escolha uma conversa para ver as mensagens.",
+      pageTitle: "Conversas e Chat da Equipa", subtitle: "Mensagens em tempo real com gestores CleanOnes e equipas de limpeza.",
     },
     profile: {
       title: "Perfil do Utilizador", personalInfo: "Informações pessoais", name: "Nome completo", email: "Endereço de email", phone: "Número de telefone",
@@ -1059,6 +1065,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "اكتب رسالتك هنا...", send: "إرسال", activeConversations: "CleanOnes",
       supervisor: "مشرف العمليات", online: "متصل", offline: "غير متصل", noMessages: "ابدأ محادثة مع مشرفك",
       conversation: "المحادثة", participants: "المشاركون", selectConversation: "حدد محادثة", selectConversationDesc: "اختر محادثة لعرض الرسائل.",
+      pageTitle: "المحادثات ودردشة الفريق", subtitle: "مراسلة فورية مع مديري CleanOnes وفرق التنظيف.",
     },
     profile: {
       title: "الملف الشخصي للمستخدم", personalInfo: "المعلومات الشخصية", name: "الاسم الكامل", email: "البريد الإلكتروني", phone: "رقم الهاتف",
@@ -1214,6 +1221,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Écrivez votre message ici...", send: "Envoyer", activeConversations: "CleanOnes",
       supervisor: "Superviseur des Opérations", online: "En ligne", offline: "Hors ligne", noMessages: "Démarrez une conversation avec votre superviseur",
       conversation: "Conversation", participants: "PARTICIPANTS", selectConversation: "Sélectionner une conversation", selectConversationDesc: "Choisissez une conversation pour voir les messages.",
+      pageTitle: "Conversations & Chat d'équipe", subtitle: "Messagerie en temps réel avec les managers CleanOnes et les équipes de nettoyage.",
     },
     profile: {
       title: "Profil Utilisateur", personalInfo: "Informations personnelles", name: "Nom complet", email: "Adresse email", phone: "Numéro de téléphone",
@@ -1369,6 +1377,7 @@ export const translations: Record<string, TranslationDict> = {
       title: "CleanOnes", typeMessage: "Escriba su mensaje aquí...", send: "Enviar", activeConversations: "CleanOnes",
       supervisor: "Supervisor de Operaciones", online: "En línea", offline: "Fuera de línea", noMessages: "Inicie una conversación con su supervisor",
       conversation: "Conversación", participants: "PARTICIPANTES", selectConversation: "Seleccionar una conversación", selectConversationDesc: "Elija una conversación para ver los mensajes.",
+      pageTitle: "Conversaciones y chat del equipo", subtitle: "Mensajería en tiempo real con gerentes de CleanOnes y equipos de limpieza.",
     },
     profile: {
       title: "Perfil de Usuario", personalInfo: "Información personal", name: "Nombre completo", email: "Correo electrónico", phone: "Número de teléfono",
