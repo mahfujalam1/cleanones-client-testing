@@ -13,7 +13,6 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
     const initialize = () => {
       const savedUser = getStoredUser();
       const token = getAccessToken();
-
       if (savedUser || token) {
         const userToSet: UserProfile = savedUser
           ? { ...savedUser }
