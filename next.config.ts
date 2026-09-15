@@ -15,10 +15,10 @@ const targetUrl = (() => {
     return null;
   }
 })();
-const backendOrigin = targetUrl?.origin ?? "";
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  skipTrailingSlashRedirect: true,
   // Development only: hosts allowed to reach this dev server's /_next assets. Production
   // domains have no effect here, so only the LAN test machines are listed.
   allowedDevOrigins: ["10.10.28.194", "10.10.28.195", "cleanones-client-portal.vercel.app"],
@@ -48,18 +48,6 @@ const nextConfig: NextConfig = {
         source: "/api/proxy/:path*",
         destination: `${backendUrl}/:path*`,
       },
-      ...(backendOrigin
-        ? [
-            {
-              source: "/api/socket-io",
-              destination: `${backendOrigin}/socket.io`,
-            },
-            {
-              source: "/api/socket-io/:path*",
-              destination: `${backendOrigin}/socket.io/:path*`,
-            },
-          ]
-        : []),
     ];
   },
 };

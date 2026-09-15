@@ -30,14 +30,8 @@ function backendOrigin(): string {
   return "";
 }
 
-function targetUrl(request: NextRequest, path: string[] = []): string {
+async function proxySocket(request: NextRequest): Promise<Response> {
   const origin = backendOrigin().replace(/\/$/, "");
-  const extra = path.length ? `/${path.join("/")}` : "";
-  return `${origin}/socket.io${extra}${request.nextUrl.search}`;
-}
-
-async function proxySocket(request: NextRequest, path: string[] = []): Promise<Response> {
-  const origin = backendOrigin();
   if (!origin) {
     return Response.json({ message: "Socket proxy is not configured." }, { status: 500 });
   }
@@ -61,7 +55,7 @@ async function proxySocket(request: NextRequest, path: string[] = []): Promise<R
     Object.assign(init, { duplex: "half" });
   }
 
-  const upstream = await fetch(targetUrl(request, path), init);
+  const upstream = await fetch(`${origin}/socket.io/${request.nextUrl.search}`, init);
   const responseHeaders = new Headers();
   upstream.headers.forEach((value, key) => {
     if (!HOP_BY_HOP.has(key.toLowerCase())) {
@@ -76,18 +70,23 @@ async function proxySocket(request: NextRequest, path: string[] = []): Promise<R
   });
 }
 
-export async function GET(
-  request: NextRequest,
-  context: { params: Promise<{ path?: string[] }> }
-) {
-  const { path = [] } = await context.params;
-  return proxySocket(request, path);
+export async function GET(request: NextRequest) {
+  return proxySocket(request);
 }
 
-export async function POST(
-  request: NextRequest,
-  context: { params: Promise<{ path?: string[] }> }
-) {
-  const { path = [] } = await context.params;
-  return proxySocket(request, path);
+export async function POST(request: NextRequest) {
+  return proxySocket(request);
+}
+
+export async function HEAD(request: NextRequest) {
+  return proxySocket(request);
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      Allow: "GET, POST, HEAD, OPTIONS",
+    },
+  });
 }
