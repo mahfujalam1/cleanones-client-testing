@@ -8,7 +8,6 @@ import { App, ConfigProvider, theme as antdTheme } from "antd";
 import { initializeAuth, getStoredUser, type UserProfile } from "@/redux/slices/authSlice";
 import { getAccessToken, getRefreshToken, setAuthCookies } from "@/redux/baseApi";
 
-
 function AuthInitializer({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const initialize = () => {
