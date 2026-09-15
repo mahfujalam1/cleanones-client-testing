@@ -46,6 +46,6 @@ export const config = {
      * - Next internals
      * - static files with an extension
      */
-    "/((?!api|_next/static|_next/image|_next/data|favicon.ico|icon.png|manifest.webmanifest|.*\\..*).*)",
+    "/((?!api|_next/static|_next/image|_next/data|favicon.ico|icon.png|manifest.webmanifest|socket\\.io|.*\\..*).*)",
   ],
 };

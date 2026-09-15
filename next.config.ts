@@ -51,11 +51,11 @@ const nextConfig: NextConfig = {
       ...(backendOrigin
         ? [
             {
-              source: "/socket.io",
+              source: "/api/socket-io",
               destination: `${backendOrigin}/socket.io`,
             },
             {
-              source: "/socket.io/:path*",
+              source: "/api/socket-io/:path*",
               destination: `${backendOrigin}/socket.io/:path*`,
             },
           ]

@@ -21,7 +21,7 @@ function getBackendSocketOrigin(): string {
 
 /**
  * HTTPS pages cannot open ws:// to an HTTP backend (mixed content).
- * In that case connect to this app origin so Next.js can proxy /socket.io.
+ * Use same-origin /api/socket-io, which proxies to the backend over HTTPS.
  */
 function shouldProxySocket(): boolean {
   const origin = getBackendSocketOrigin();
@@ -70,7 +70,8 @@ export async function getChatSocket(): Promise<Socket | null> {
   const proxied = shouldProxySocket();
 
   const socket = io(baseUrl, {
-    path: "/socket.io",
+    // /socket.io is intercepted by locale routing on Vercel; /api/* is not.
+    path: proxied ? "/api/socket-io" : "/socket.io",
     auth: { token },
     query: { token },
     // Vercel cannot upgrade WebSockets to an HTTP origin; polling stays on HTTPS.
