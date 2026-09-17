@@ -35,7 +35,7 @@ export function ChangePasswordModal({ isOpen, onClose }: ChangePasswordModalProp
     }
 
     if (newPassword !== confirmPassword) {
-      setError(t.auth?.passwordMismatch || "New passwords do not match");
+      setError(t.auth?.passwordMismatch || "Confirm passwords do not match");
       return;
     }
 
@@ -62,10 +62,10 @@ export function ChangePasswordModal({ isOpen, onClose }: ChangePasswordModalProp
           onClose();
         }, 1500);
       } else {
-        setError(result.message || "Failed to change password");
+        setError("Current password does't match");
       }
     } catch (err: any) {
-      setError(err?.data?.message || err?.message || "Failed to change password");
+      setError("Current password does't match");
     }
   };
 

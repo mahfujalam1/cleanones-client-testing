@@ -168,6 +168,7 @@ export function RequestServiceModal({
               type="datetime-local"
               value={dateTime}
               onChange={(e) => setDateTime(e.target.value)}
+              min={new Date().toISOString().slice(0, 16)}
               className="text-xs h-9"
             />
           </div>
