@@ -22,12 +22,12 @@ function formatNotificationDate(dateStr?: string): string {
   return m.format("Do MMM YYYY, h:mm a").replace(/\bSep\b/, "Sept");
 }
 
-/** Helper — supports both camelCase (isRead) and snake_case (is_read) from the API */
+
 function isRead(n: NotificationItem): boolean {
   return Boolean(n.isRead ?? n.is_read);
 }
 
-/** Helper — supports both createdAt and created_at */
+
 function createdAt(n: NotificationItem): string | undefined {
   return n.createdAt ?? n.created_at;
 }
@@ -50,7 +50,7 @@ export default function NotificationsPage() {
   const [deleteNotificationMutation] = useDeleteNotificationMutation();
   const [seeNotificationsMutation] = useSeeNotificationsMutation();
 
-  // Real shape: { data: { meta: { total, totalPage, unreadCount, ... }, result: [...] } }
+  
   const meta = notificationsRes?.data?.meta;
   const items: NotificationItem[] = notificationsRes?.data?.result ?? [];
   const totalPages = meta?.totalPage ?? 1;
@@ -128,7 +128,7 @@ export default function NotificationsPage() {
 
   return (
     <div className="space-y-4 text-sm">
-      {/* ── Header ───────────────────────────────────────────────── */}
+      
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-slate-900">Notifications</h1>
@@ -172,7 +172,7 @@ export default function NotificationsPage() {
       {error && <Alert type="error" showIcon message={error} closable onClose={() => setError("")} />}
       {success && <Alert type="success" showIcon message={success} closable onClose={() => setSuccess("")} />}
 
-      {/* ── List ─────────────────────────────────────────────────── */}
+      
       {loading ? (
         <div className="space-y-3">
           {[1, 2, 3].map((item) => (
@@ -207,7 +207,7 @@ export default function NotificationsPage() {
                 styles={{ body: { padding: 14 } }}
               >
                 <div className="flex items-start gap-3">
-                  {/* Checkbox */}
+                  
                   <div className="pointer-events-auto flex items-center pt-2">
                     <Checkbox
                       checked={isSelected}
@@ -218,12 +218,12 @@ export default function NotificationsPage() {
                     />
                   </div>
 
-                  {/* Icon */}
+                  
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded border border-sky-100 bg-sky-50 text-sky-500">
                     <TbBell className="text-base" />
                   </span>
 
-                  {/* Content */}
+                  
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <p className="truncate text-xs font-bold text-slate-800">{notification.title}</p>
@@ -242,7 +242,7 @@ export default function NotificationsPage() {
                     </time>
                   </div>
 
-                  {/* Delete */}
+                  
                   <div className="pointer-events-auto">
                     <Tooltip title="Delete notification">
                       <Button
@@ -268,7 +268,7 @@ export default function NotificationsPage() {
         </Card>
       )}
 
-      {/* ── Pagination ────────────────────────────────────────────── */}
+      
       <div className="flex items-center justify-between border-t border-slate-200 pt-3">
         <span className="text-[10px] text-slate-400">
           {meta ? `Page ${page} of ${totalPages} · ${meta.total} total` : ""}

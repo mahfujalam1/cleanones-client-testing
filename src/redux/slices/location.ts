@@ -20,7 +20,7 @@ export const locationSlice = createSlice({
   reducers: {
     setSelectedLocation: (state, action: PayloadAction<string | null>) => {
       state.selectedLocationId = action.payload;
-      state.selectedRoomId = null; // Reset room when location changes
+      state.selectedRoomId = null; 
     },
     setSelectedRoom: (state, action: PayloadAction<string | null>) => {
       state.selectedRoomId = action.payload;

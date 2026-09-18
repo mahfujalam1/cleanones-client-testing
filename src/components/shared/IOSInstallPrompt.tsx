@@ -7,12 +7,12 @@ export function IOSInstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
-    // Check if device is iOS and not already running in standalone PWA mode
+    
     const isIOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as any).standalone;
 
-    // Check if user dismissed prompt previously in this session
+    
     const isDismissed = sessionStorage.getItem("ios_pwa_prompt_dismissed");
 
     if (isIOS && !isStandalone && !isDismissed) {

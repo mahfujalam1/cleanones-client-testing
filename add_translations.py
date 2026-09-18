@@ -78,8 +78,6 @@ rosters = {
 }
 
 for lang, roster_str in rosters.items():
-    # Regex to find topbar block for the specific language and insert roster after it
-    # We look for \`  lang: {\` and then the first \`    topbar: { ... },\`
     pattern = re.compile(rf'(  {lang}: {{.*?    topbar: {{.*?}},\n)', re.DOTALL)
     content = pattern.sub(rf'\1{roster_str}\n', content, count=1)
 

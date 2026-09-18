@@ -19,8 +19,8 @@ const targetUrl = (() => {
 const nextConfig: NextConfig = {
   turbopack: {},
   skipTrailingSlashRedirect: true,
-  // Development only: hosts allowed to reach this dev server's /_next assets. Production
-  // domains have no effect here, so only the LAN test machines are listed.
+  
+  
   allowedDevOrigins: ["10.10.28.194", "10.10.28.195", "cleanones-client-portal.vercel.app"],
   images: {
     remotePatterns: [
@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
           },
         ]
         : []),
-      // Profile photos, ID cards, conversation attachments and certificates are served from S3 / CloudFront over HTTPS.
+      
       { protocol: "https", hostname: "cleanones-bucket.s3.eu-central-1.amazonaws.com", pathname: "/**" },
       { protocol: "https", hostname: "*.s3.eu-central-1.amazonaws.com", pathname: "/**" },
       { protocol: "https", hostname: "*.amazonaws.com", pathname: "/**" },

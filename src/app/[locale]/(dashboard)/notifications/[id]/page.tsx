@@ -38,7 +38,7 @@ export default function NotificationDetailsPage() {
   const notification: NotificationItem | undefined =
     notificationsData?.data?.result?.find((item: any) => item._id === id);
 
-  // Automatically mark notifications as read/seen when viewing details
+  
   useEffect(() => {
     if (id) {
       void seeNotifications();
@@ -67,7 +67,7 @@ export default function NotificationDetailsPage() {
 
   return (
     <div className="space-y-4 text-sm">
-      {/* Top action bar */}
+      
       <div className="flex items-center justify-between gap-2">
         <Button
           icon={<TbChevronLeft />}

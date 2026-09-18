@@ -17,7 +17,7 @@ import {
 } from "react-icons/tb";
 import { useGetClientMyLiveStatusQuery } from "@/redux/api/clientApi";
 
-// ─── Types matching /shift/my-live-status response ───────────────────────────
+
 interface ShiftRoom {
   room: string;
   name: string;
@@ -54,18 +54,18 @@ interface LiveShift {
   rooms: ShiftRoom[];
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function LiveStatusPage() {
   const params = useParams<{ locale: string }>();
   const t = getTranslation(params?.locale);
 
   const { data: res, isLoading, refetch } = useGetClientMyLiveStatusQuery();
 
-  // The API returns { success, data: LiveShift[] }
+  
   const shifts: LiveShift[] = res?.data ?? [];
   const empty = !isLoading && shifts.length === 0;
 
-  // Which shift card is expanded (default: first one)
+  
   const [activeId, setActiveId] = useState<string | null>(null);
   const activeShift = shifts.find((s) => s._id === activeId) ?? shifts[0] ?? null;
 
@@ -98,7 +98,7 @@ export default function LiveStatusPage() {
     <PageShell t={t}>
       <div className="space-y-4">
 
-        {/* ── Shift selector tabs (if multiple active shifts) ─────────── */}
+        
         {shifts.length > 1 && (
           <div className="flex flex-wrap gap-2">
             {shifts.map((s) => (
@@ -123,7 +123,7 @@ export default function LiveStatusPage() {
   );
 }
 
-// ─── Shift detail view ────────────────────────────────────────────────────────
+
 function ShiftDetail({ shift, t, onRefetch }: { shift: LiveShift; t: any; onRefetch: () => void }) {
   const startDate = new Date(shift.date_time);
   const endDate = new Date(startDate.getTime() + shift.duration_minutes * 60 * 1000);
@@ -141,7 +141,7 @@ function ShiftDetail({ shift, t, onRefetch }: { shift: LiveShift; t: any; onRefe
   return (
     <div className="space-y-4">
 
-      {/* Progress banner */}
+      
       <div className={`rounded border p-4 ${shift.status === "in_progress" ? "border-orange-200 bg-orange-50" : "border-slate-200 bg-white"}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -169,7 +169,7 @@ function ShiftDetail({ shift, t, onRefetch }: { shift: LiveShift; t: any; onRefe
         />
       </div>
 
-      {/* Metric cards */}
+      
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           icon={<TbMapPin />}
@@ -197,7 +197,7 @@ function ShiftDetail({ shift, t, onRefetch }: { shift: LiveShift; t: any; onRefe
         />
       </div>
 
-      {/* Assigned workers */}
+      
       {shift.assigned_workers?.length > 0 && (
         <div className="overflow-hidden rounded border border-slate-200 bg-white">
           <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50/60 px-4 py-3">
@@ -227,7 +227,7 @@ function ShiftDetail({ shift, t, onRefetch }: { shift: LiveShift; t: any; onRefe
         </div>
       )}
 
-      {/* Rooms progress */}
+      
       {shift.rooms?.length > 0 && (
         <div className="overflow-hidden rounded border border-slate-200 bg-white">
           <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50/60 px-4 py-3">
@@ -287,7 +287,7 @@ function ShiftDetail({ shift, t, onRefetch }: { shift: LiveShift; t: any; onRefe
   );
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+
 function PageShell({ children, t }: { children: React.ReactNode; t: any }) {
   return (
     <div className="space-y-4 text-xs text-slate-700">

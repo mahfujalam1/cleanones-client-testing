@@ -52,7 +52,7 @@ export function Sidebar({ isMobile = false }: { isMobile?: boolean }) {
       badge: unreadBadge,
     },
     { id: "profile", label: t.sidebar.profile, icon: TbUser, path: "/profile" },
-    // { id: "settings", label: t.sidebar.settings, icon: TbSettings, path: "/settings" },
+    
   ];
 
   const handleNavigate = (id: string, path: string) => {
@@ -91,7 +91,7 @@ export function Sidebar({ isMobile = false }: { isMobile?: boolean }) {
         </button>
       )}
 
-      {/* Navigation menu */}
+      
       <div className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain px-3 py-3">
         {menuItems.map((item) => {
           const Icon = item.icon;
@@ -132,7 +132,7 @@ export function Sidebar({ isMobile = false }: { isMobile?: boolean }) {
 
       <div className="mx-3 border-t border-border" />
 
-      {/* Sign Out Button */}
+      
       <div className="p-3 border-t border-sidebar-hover">
         <button
           onClick={handleSignOut}

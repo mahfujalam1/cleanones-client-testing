@@ -105,8 +105,7 @@ export default function LocationDetailPage() {
 
   return (
     <div className="space-y-4 text-xs text-slate-700">
-      {/* Header + overview in one compact card — the stats are content-sized tiles rather than a
-          full-width strip, which left a long empty band on wide screens. */}
+      
       <section className="rounded-xl border border-slate-300/80 bg-white p-4">
         <div className="flex min-w-0 items-start gap-2.5">
           <Link
@@ -136,7 +135,7 @@ export default function LocationDetailPage() {
             )}
           </div>
 
-          {/* Stat tiles keep their own width instead of stretching across the card */}
+          
           {details && (
             <div className="hidden shrink-0 gap-2 sm:flex">
               <StatTile value={(details as any).total_room ?? roomTotal} label={t.locations.rooms} />
@@ -165,7 +164,7 @@ export default function LocationDetailPage() {
 
       {detailsError && <Alert type="error" showIcon message={detailsError} />}
 
-      {/* Rooms */}
+      
       <section className="space-y-3 rounded-xl border border-slate-300/80 bg-white p-4">
         <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
           <div>

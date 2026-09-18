@@ -43,7 +43,7 @@ export function getInitials(name?: string | null): string {
   return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
 }
 
-/** Lightweight placeholder while chats / messages load */
+
 export function DetailSkeleton({ blocks = 5 }: { blocks?: number }) {
   return (
     <div className="space-y-2 p-1 animate-pulse">

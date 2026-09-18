@@ -35,7 +35,7 @@ export function ClientTaskCard({
   const p = getPlaceholderTranslation(params?.locale);
   return (
     <div className="space-y-3.5 rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
-      {/* Header row: Task # + Remove */}
+      
       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
         <strong className="text-xs font-bold text-slate-800">Task {taskIndex + 1}</strong>
         <button
@@ -48,7 +48,7 @@ export function ClientTaskCard({
         </button>
       </div>
 
-      {/* Row 1: Task name & Schedule type */}
+      
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1">
           <label className="block text-xs font-semibold text-slate-700">Task name *</label>
@@ -73,7 +73,7 @@ export function ClientTaskCard({
         </div>
       </div>
 
-      {/* Row 2: Fixed date & Duration */}
+      
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1">
           <label className="block text-xs font-semibold text-slate-700">Fixed date *</label>
@@ -106,7 +106,7 @@ export function ClientTaskCard({
         </div>
       </div>
 
-      {/* Photo Required Checkbox */}
+      
       <div className="pt-1">
         <Checkbox
           checked={task.is_photo_req}
@@ -122,7 +122,7 @@ export function ClientTaskCard({
         </Checkbox>
       </div>
 
-      {/* Photo List (Optional) */}
+      
       {task.is_photo_req && (
         <div className="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
           <p className="text-[11px] font-semibold text-slate-600">Attach photo description (Optional)</p>

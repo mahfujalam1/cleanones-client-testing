@@ -26,12 +26,12 @@ interface ServiceRequestItemProps {
 }
 
 export function ServiceRequestItem({ request }: ServiceRequestItemProps) {
-  // Select icon based on type
+  
   const getIcon = () => {
     const lowerType = request.type.toLowerCase();
     if (lowerType.includes("window")) return TbLayoutGrid;
     if (lowerType.includes("carpet") || lowerType.includes("floor")) return TbBrush;
-    return TbSparkles; // default to sparkles (deep cleaning)
+    return TbSparkles; 
   };
 
   const Icon = getIcon();
@@ -70,7 +70,7 @@ export function ServiceRequestItem({ request }: ServiceRequestItemProps) {
           </div>
         </div>
 
-        {/* Badges */}
+        
         <div className="flex items-center gap-2">
           <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${priorityStyles[request.priority]}`}>
             {priorityLabels[request.priority]}

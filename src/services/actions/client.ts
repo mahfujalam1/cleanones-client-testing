@@ -664,37 +664,37 @@ export function getNotificationRoute(routeType?: string, locale = "en"): string 
 
   const normalized = routeType.toLowerCase().trim();
 
-  // Chat or Support (available in sidebar: Chat -> /chat)
+  
   if (normalized.includes("chat") || normalized.includes("support")) {
     return `/${locale}/chat`;
   }
 
-  // Extra services / Services (available in sidebar: Services -> /services)
+  
   if (normalized.includes("extra_service") || normalized.includes("service")) {
     return `/${locale}/services`;
   }
 
-  // Schedule (available in sidebar: Schedule -> /schedule)
+  
   if (normalized.includes("schedule")) {
     return `/${locale}/schedule`;
   }
 
-  // Locations (available in sidebar: Locations -> /locations)
+  
   if (normalized.includes("location")) {
     return `/${locale}/locations`;
   }
 
-  // Rooms (available in sidebar: Rooms -> /rooms)
+  
   if (normalized.includes("room")) {
     return `/${locale}/rooms`;
   }
 
-  // Profile (available in sidebar: Profile -> /profile)
+  
   if (normalized.includes("profile")) {
     return `/${locale}/profile`;
   }
 
-  // Overview / Home / Dashboard (available in sidebar: Dashboard -> /)
+  
   if (
     normalized === "overview" ||
     normalized === "home" ||
@@ -705,7 +705,7 @@ export function getNotificationRoute(routeType?: string, locale = "en"): string 
     return `/${locale}`;
   }
 
-  // Sections that do not exist in the client sidebar menu (e.g. workers, clients, escalations, photo_reviews, invoices, settings, roster, etc.)
+  
   return null;
 }
 export const getClientNotifications = async (page = 1, limit = 10) =>
@@ -818,7 +818,7 @@ export type Conversation = {
   is_active: boolean;
   created_at: string;
   updated_at: string;
-  // added for frontend use
+  
   unread_count?: number; 
 };
 

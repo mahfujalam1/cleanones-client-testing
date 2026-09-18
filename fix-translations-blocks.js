@@ -97,13 +97,13 @@ const additions = {
 
 for (const [lang, data] of Object.entries(additions)) {
   const findStr = `actionFeedback: {`;
-  // We need to find the actionFeedback block that belongs to the current language.
-  // We know the structure is:
-  // lang: {
-  //   ...
-  //   actionFeedback: { ... }
-  // }
-  // We can search for \`\n  \${lang}: {\` and then find the NEXT occurrence of \`actionFeedback:\`
+  
+  
+  
+  
+  
+  
+  
   
   const startIdx = content.indexOf(\`\\n  \${lang}: {\`);
   if (startIdx !== -1) {

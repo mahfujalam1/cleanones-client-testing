@@ -51,7 +51,7 @@ export default function CleaningPlanDetailsPage() {
 
   return (
     <div className="flex flex-col bg-slate-50/30 rounded-xl overflow-hidden border border-slate-200">
-      {/* Header */}
+      
       <div className="flex items-start justify-between p-4 bg-white border-b border-slate-200">
         <div className="flex items-start gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-[#009EE2]">
@@ -78,9 +78,9 @@ export default function CleaningPlanDetailsPage() {
         </div>
       </div>
 
-      {/* Content */}
+      
       <div className="p-4 space-y-4">
-        {/* Metrics Row */}
+        
         <div className="grid grid-cols-4 gap-3">
           <div className="bg-white border border-slate-200 rounded-lg p-4 flex items-center gap-4">
             <TbClock className="h-6 w-6 text-[#009EE2]" />
@@ -114,7 +114,7 @@ export default function CleaningPlanDetailsPage() {
 
         <div className="space-y-4">
 
-          {/* Location Row */}
+          
           <div className="flex flex-col">
             <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-2">{t.cleaningPlan.location}</h3>
             <div className="bg-white border border-slate-200 rounded-lg p-4">
@@ -132,7 +132,7 @@ export default function CleaningPlanDetailsPage() {
             </div>
           </div>
 
-          {/* Rooms & Tasks Section */}
+          
           <div>
             <h3 className="text-[11px] font-bold text-slate-600 flex items-center gap-2 uppercase tracking-widest mb-3">
               <TbDoor className="h-4 w-4 text-[#009EE2]" /> {t.cleaningPlan.roomsAndTasks} ({roomsCount})
@@ -140,7 +140,7 @@ export default function CleaningPlanDetailsPage() {
             <div className="space-y-4">
               {rooms.map((room: any) => (
                 <div key={room._id} className="bg-white border border-slate-200 rounded-lg p-4">
-                  {/* Room Header */}
+                  
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded bg-white border border-slate-200 text-[#009EE2] flex items-center justify-center shadow-sm">
@@ -167,7 +167,7 @@ export default function CleaningPlanDetailsPage() {
                     </div>
                   </div>
 
-                  {/* Task List */}
+                  
                   {room.tasks && room.tasks.length > 0 && (
                     <div>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">{t.cleaningPlan.tasks}</p>
@@ -218,7 +218,7 @@ export default function CleaningPlanDetailsPage() {
             </div>
           </div>
 
-          {/* Additional Tasks (One-Time / Non-Recurring) Section */}
+          
           {additionalTasks && additionalTasks.length > 0 && (
             <div className="pt-2">
               <div className="flex items-center justify-between mb-2">
@@ -228,7 +228,7 @@ export default function CleaningPlanDetailsPage() {
 
               </div>
 
-              {/* Explicit callout explaining that additional duration applies only on that day */}
+              
 
 
               <div className="space-y-3">
@@ -258,7 +258,7 @@ export default function CleaningPlanDetailsPage() {
                         </div>
                       </div>
 
-                      {/* Explicit Duration & Scheduled Date Banner */}
+                      
                       <div className="mt-3 rounded-md bg-slate-50 border border-slate-200/80 p-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
                         <div className="flex items-center gap-2">
                           <span className="flex items-center gap-1 text-[11px] font-bold text-slate-700">
@@ -269,12 +269,10 @@ export default function CleaningPlanDetailsPage() {
                             <TbCalendar className="h-3.5 w-3.5 text-slate-400" /> {taskDateStr}
                           </span>
                         </div>
-                        {/* <span className="text-[10px] font-medium text-amber-800 bg-amber-100/60 rounded px-2 py-0.5">
-                          Adds +{task.duration_minutes || 0}m on this day only
-                        </span> */}
+                        
                       </div>
 
-                      {/* Photo requirements if any */}
+                      
                       {task.is_photo_required && (
                         <div className="mt-3 pt-2.5 border-t border-slate-100">
                           <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 mb-1.5">

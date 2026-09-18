@@ -1,4 +1,4 @@
-// API response envelopes defined in CLIENT_API.md
+
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -26,9 +26,9 @@ export interface PaginatedResult<T> {
 
 export type PaginatedApiResponse<T> = ApiResponse<PaginatedResult<T>>;
 
-// -------------------------------------------------------------
-// 1. Authentication Types
-// -------------------------------------------------------------
+
+
+
 
 export interface LoginRequest {
   email: string;
@@ -65,9 +65,9 @@ export interface ResetPasswordRequest {
   confirmPassword: string;
 }
 
-// -------------------------------------------------------------
-// 2. Profile Types
-// -------------------------------------------------------------
+
+
+
 
 export interface UserAccount {
   _id: string;
@@ -95,9 +95,9 @@ export interface UpdateProfileRequest {
   profile_image?: File | Blob;
 }
 
-// -------------------------------------------------------------
-// 3. Location Types
-// -------------------------------------------------------------
+
+
+
 
 export interface GeoPoint {
   type: "Point";
@@ -122,9 +122,9 @@ export interface GetLocationsParams {
   sort?: string;
 }
 
-// -------------------------------------------------------------
-// 4. Room Types
-// -------------------------------------------------------------
+
+
+
 
 export interface LocationSummary {
   _id: string;
@@ -178,9 +178,9 @@ export interface GetRoomsParams {
   sort?: string;
 }
 
-// -------------------------------------------------------------
-// 5. Task Types
-// -------------------------------------------------------------
+
+
+
 
 export interface TaskPhotoRequirement {
   title: string;
@@ -216,9 +216,9 @@ export interface GetTasksParams {
   sort?: string;
 }
 
-// -------------------------------------------------------------
-// 6. Additional Task Types
-// -------------------------------------------------------------
+
+
+
 
 export interface AdditionalTaskPhotoRequirement {
   title: string;
@@ -267,9 +267,9 @@ export interface DeleteAdditionalTaskResponse {
   message: string;
 }
 
-// -------------------------------------------------------------
-// 7. Notification Types
-// -------------------------------------------------------------
+
+
+
 
 export interface NotificationData {
   entity?: string;
@@ -286,16 +286,16 @@ export interface NotificationItem {
   message: string;
   notification_type?: string;
   route_type?: string;
-  /** New API uses isRead (camelCase) */
+  
   isRead?: boolean;
-  /** Old API used is_read (snake_case) — keep for backward compat */
+  
   is_read?: boolean;
   isSeen?: boolean;
   readAt?: string | null;
   seenAt?: string | null;
   data?: NotificationData;
   createdAt?: string;
-  /** Old API used created_at */
+  
   created_at?: string;
   updatedAt?: string;
   updated_at?: string;

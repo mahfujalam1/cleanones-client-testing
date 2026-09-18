@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const setAccessTokenToCookies = async (token: string, option?: any) => {
   if (typeof document !== "undefined") {
     document.cookie = `cleanones_client_access_token=${encodeURIComponent(token)}; path=/; SameSite=Lax;`;

@@ -19,10 +19,7 @@ function getBackendSocketOrigin(): string {
   return "";
 }
 
-/**
- * HTTPS pages cannot open ws:// to an HTTP backend (mixed content).
- * Use same-origin /api/socket-io, which proxies to the backend over HTTPS.
- */
+
 function shouldProxySocket(): boolean {
   const origin = getBackendSocketOrigin();
   return (
@@ -40,9 +37,7 @@ export function getSocketBaseUrl(): string {
   return "";
 }
 
-/**
- * Ensures access token is available and connects to Socket.IO server.
- */
+
 export async function getChatSocket(): Promise<Socket | null> {
   if (typeof window === "undefined") return null;
 
@@ -70,11 +65,11 @@ export async function getChatSocket(): Promise<Socket | null> {
   const proxied = shouldProxySocket();
 
   const socket = io(baseUrl, {
-    // /socket.io is intercepted by locale routing on Vercel; /api/* is not.
+    
     path: proxied ? "/api/socket-io" : "/socket.io",
     auth: { token },
     query: { token },
-    // Vercel cannot upgrade WebSockets to an HTTP origin; polling stays on HTTPS.
+    
     transports: proxied ? ["polling"] : ["websocket", "polling"],
     upgrade: !proxied,
     reconnection: true,

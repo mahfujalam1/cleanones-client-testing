@@ -28,19 +28,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const locale = (params?.locale as string) || "en";
   const t = getTranslation(locale);
 
-  // Redirect to login if not authenticated
+  
   useEffect(() => {
     if (initialized && !isAuthenticated) {
       router.replace(`/${locale}/login`);
     }
   }, [initialized, isAuthenticated, router, locale]);
 
-  // Synchronize active tab in sidebar with browser path name
+  
   useEffect(() => {
     if (pathname) {
       let tab = "dashboard";
       if (pathname !== "/") {
-        // extract the active page name (e.g. /profile -> profile)
+        
         tab = pathname.split("/").filter(Boolean)[1] || "dashboard";
       }
       dispatch(setActiveTab(tab));
@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     try {
       await logoutUser();
     } catch {
-      // Ignore API error on logout
+      
     }
     window.location.href = `/${locale}/login`;
   };
@@ -84,10 +84,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </main>
       </div>
 
-      {/* Mobile Drawer (Controlled by Redux) */}
+      
       <MobileDrawer />
 
-      {/* Global Sign Out Confirmation Modal */}
+      
       <ConfirmationModal
         isOpen={logoutModalOpen}
         onClose={() => dispatch(setLogoutModalOpen(false))}

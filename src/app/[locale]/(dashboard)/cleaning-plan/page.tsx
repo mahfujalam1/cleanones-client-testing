@@ -98,19 +98,19 @@ function CleaningPlanCard({ plan, onDetails, t }: { plan: any; onDetails: () => 
   const dateObj = new Date(plan.date_time || plan.createdAt);
   const formattedDate = `${dateObj.toISOString().split("T")[0]} - ${dateObj.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })}`;
 
-  // Dummy data mapping for missing payload fields based on screenshot
+  
   const clientName = plan.client?.name || plan.client || "Veldhoven Groep";
   const locationName = plan.location?.name || plan.location || "Campus Eindhoven";
   const rooms = plan.rooms?.length > 0 ? plan.rooms : ["Toiletgroep", "Serverruimte"];
   const duration = plan.max_estimated_duration || 30;
   const tasksCount = plan.total_tasks ?? plan.total_task ?? 0;
-  const photosCount = 0; // Payload doesn't provide this by default
+  const photosCount = 0; 
 
   return (
     <div className="flex flex-col bg-white rounded-md transition-shadow">
       <div className="p-4 flex-1" onClick={onDetails} style={{ cursor: "pointer" }}>
 
-        {/* Header */}
+        
         <div className="flex justify-between items-start mb-2">
           <div className="flex items-start gap-3" >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100  text-slate-400 ">
@@ -123,12 +123,12 @@ function CleaningPlanCard({ plan, onDetails, t }: { plan: any; onDetails: () => 
                   {plan.status || "Active"}
                 </span>
               </div>
-              {/* <p className="text-xs text-slate-500 mt-0.5">{clientName}</p> */}
+              
             </div>
           </div>
         </div>
 
-        {/* Info Rows */}
+        
         <div className="space-y-2 mt-4 text-xs text-slate-600">
           <div className="flex items-center gap-2">
             <TbMapPin className="text-[#009EE2] h-4 w-4 shrink-0" />
@@ -145,7 +145,7 @@ function CleaningPlanCard({ plan, onDetails, t }: { plan: any; onDetails: () => 
         </div>
       </div>
 
-      {/* Stats Divider */}
+      
       <div className="grid grid-cols-3 divide-x divide-slate-100 border-t border-slate-100 p-3 text-center">
         <div>
           <b className="block text-sm text-slate-800">{duration}m</b>

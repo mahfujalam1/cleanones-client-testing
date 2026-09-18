@@ -60,7 +60,7 @@ export const liveSlice = createSlice({
           delete task.timestamp;
         }
 
-        // Recalculate progress
+        
         const completedCount = state.tasks.filter((t) => t.status === "completed").length;
         state.progress = Math.round((completedCount / state.tasks.length) * 100);
       }

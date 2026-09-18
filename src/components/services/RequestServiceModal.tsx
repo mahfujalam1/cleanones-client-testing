@@ -101,7 +101,7 @@ export function RequestServiceModal({
       }}
     >
       <form onSubmit={handleSubmit} className="flex max-h-[85vh] flex-col text-xs">
-        {/* Fixed Header */}
+        
         <div className="flex items-center gap-3 border-b border-slate-100 p-5 bg-white shrink-0">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-600 text-xl shrink-0">
             <TbSparkles />
@@ -116,7 +116,7 @@ export function RequestServiceModal({
           </div>
         </div>
 
-        {/* Scrollable Form Body */}
+        
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
 
           <div className="space-y-1">
@@ -175,7 +175,7 @@ export function RequestServiceModal({
 
         </div>
 
-        {/* Fixed Footer Actions */}
+        
         <div className="flex items-center justify-end gap-2 border-t border-slate-100 p-4 bg-white shrink-0">
           <Button disabled={submitting} onClick={onClose} className="text-xs">
             {t.common.cancel}

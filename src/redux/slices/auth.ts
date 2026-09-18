@@ -77,29 +77,25 @@ export const {
   updateProfile,
 } = authSlice.actions;
 
-/**
- * Retrieve stored user from localStorage or sessionStorage
- */
+
 export function getStoredUser(): UserProfile | null {
   if (typeof window === "undefined") return null;
   try {
     const local = localStorage.getItem("cleanones-client-user");
     if (local) return JSON.parse(local);
   } catch {
-    // ignore
+    
   }
   try {
     const session = sessionStorage.getItem("cleanones-client-user");
     if (session) return JSON.parse(session);
   } catch {
-    // ignore
+    
   }
   return null;
 }
 
-/**
- * Save user and tokens to localStorage or sessionStorage depending on rememberMe
- */
+
 export function saveStoredUser(user: UserProfile, rememberMe: boolean) {
   if (typeof window === "undefined") return;
   const userJson = JSON.stringify(user);
@@ -121,7 +117,7 @@ export function saveStoredUser(user: UserProfile, rememberMe: boolean) {
       sessionStorage.removeItem("cleanones_client_refresh_token");
       sessionStorage.removeItem("token");
     } catch {
-      // ignore
+      
     }
   } else {
     try {
@@ -138,7 +134,7 @@ export function saveStoredUser(user: UserProfile, rememberMe: boolean) {
       localStorage.removeItem("cleanones_client_refresh_token");
       localStorage.removeItem("token");
     } catch {
-      // ignore
+      
     }
   }
 }

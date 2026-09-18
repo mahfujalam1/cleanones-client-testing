@@ -49,7 +49,7 @@ export async function uploadConversationFiles(formData: FormData): Promise<{
 
 export async function deleteUploadedFiles(urls: string[]): Promise<void> {
   if (!urls.length) return;
-  // Best-effort cleanup; ignore failures so soft-delete still succeeds.
+  
   try {
     await authenticatedRequest("/file/delete-conversation-files", {
       method: "POST",
@@ -57,7 +57,7 @@ export async function deleteUploadedFiles(urls: string[]): Promise<void> {
       body: JSON.stringify({ urls }),
     });
   } catch {
-    // ignore
+    
   }
 }
 

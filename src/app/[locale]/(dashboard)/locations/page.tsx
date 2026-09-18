@@ -27,7 +27,7 @@ export default function LocationsPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // Debounced so typing does not fire a request per keystroke.
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -49,7 +49,7 @@ export default function LocationsPage() {
 
   return (
     <div className="space-y-4 text-xs text-slate-700">
-      {/* Header */}
+      
       <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-sky-100 bg-sky-50 text-[#009EE2]">
@@ -65,7 +65,7 @@ export default function LocationsPage() {
         </div>
       </header>
 
-      {/* Toolbar */}
+      
       <div className="rounded-xl border border-slate-200 bg-white p-2.5">
         <SearchField
           value={search}
@@ -157,7 +157,7 @@ function LocationCard({
         <Tag className="m-0 text-[9px] capitalize">{t.locations.location}</Tag>
       </div>
 
-      {/* Divider only */}
+      
       <div className="mt-auto grid grid-cols-2 divide-x divide-slate-100 border-t border-slate-100 pt-3 text-center">
         <CardStat value={roomsCount} label={t.locations.rooms} />
         <CardStat value={location.is_active ? t.locations.online : t.locations.offline} label={t.locations.status} />

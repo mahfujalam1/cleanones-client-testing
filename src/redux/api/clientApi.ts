@@ -123,7 +123,7 @@ export const clientApi = createApi({
       query: (arg) => `/client/schedule-roster${arg?.date ? `?date=${encodeURIComponent(arg.date)}` : ""}`,
       providesTags: ["Schedule"],
     }),
-    /** GET /client/roster — day/week/month schedule grouped by cleaning plan */
+    
     getClientRoster: builder.query<
       any,
       {

@@ -24,7 +24,7 @@ export function MobileDrawer() {
         onClick={handleClose}
         className={`absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity duration-500 ease-out ${mobileSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
       />
-      {/* Drawer content panel */}
+      
       <div
         data-mobile-open={mobileSidebarOpen}
         className="client-mobile-sidebar-panel relative flex h-dvh w-[min(18rem,86vw)] flex-col overflow-hidden bg-white will-change-transform"

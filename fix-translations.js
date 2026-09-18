@@ -103,11 +103,11 @@ const additions = {
 };
 
 for (const [lang, data] of Object.entries(additions)) {
-  // Add allShiftsOnSchedule to dashboard
+  
   const regexDash = new RegExp(`(  ${lang}: \\{[\\s\\S]*?dashboard: \\{[\\s\\S]*?remaining: "[^"]*")(,)(.*?\\},)`);
   content = content.replace(regexDash, `$1, allShiftsOnSchedule: "${data.allShiftsOnSchedule}"$3`);
   
-  // Add roster, shiftMonitoring, workers to the end of the lang block
+  
   const regexBlock = new RegExp(`(  ${lang}: \\{[\\s\\S]*?)(    actionFeedback:)`);
   content = content.replace(regexBlock, `$1${data.blocks}$2`);
 }

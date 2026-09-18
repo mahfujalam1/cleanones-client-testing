@@ -65,8 +65,8 @@ async function request<T>(path: string, init: RequestInit): Promise<ActionResult
 }
 
 async function saveTokens(auth: AuthResponse, rememberMe = false) {
-  // Remembered: persistent cookies that survive a full browser restart.
-  // Not remembered: true session cookies (no max-age) that only clear when the browser itself closes, not on a tab close.
+  
+  
   const accessMaxAge = rememberMe ? ACCESS_MAX_AGE : undefined;
   const refreshMaxAge = rememberMe ? PERSIST_MAX_AGE : undefined;
   if (typeof window !== "undefined") {
@@ -107,8 +107,8 @@ export async function verifyEmail(input: { email: string; otp_code: string; ones
 let refreshInFlight: Promise<ActionResult<AuthResponse>> | null = null;
 
 export async function refreshSession() {
-  // De-duplicate concurrent callers (e.g. several queries firing 401s at once on reopen) into a single
-  // network request — otherwise a rotating refresh token gets used twice and every extra caller fails.
+  
+  
   if (refreshInFlight) return refreshInFlight;
   refreshInFlight = (async () => {
     let refreshToken: string | null = null;
@@ -157,7 +157,7 @@ export async function logoutUser() {
   try {
     await authenticatedRequest<string>("/auth/logout", { method: "POST" });
   } catch {
-    // Ignore API error on logout
+    
   } finally {
     if (typeof window !== "undefined") {
       deleteClientCookie(ACCESS_TOKEN_COOKIE);

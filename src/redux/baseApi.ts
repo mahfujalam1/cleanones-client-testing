@@ -8,13 +8,11 @@ import {
 import { refreshSession } from "@/services/actions/auth";
 import { apiBase } from "@/utils/baseUrl";
 
-/**
- * Retrieve access token from client-side cookie, localStorage, or sessionStorage
- */
+
 export function getAccessToken(): string | null {
   if (typeof window === "undefined") return null;
 
-  // 1. Try cookie
+  
   if (typeof document !== "undefined") {
     const value = `; ${document.cookie}`;
     const parts = value.split("; cleanones_client_access_token=");
@@ -24,7 +22,7 @@ export function getAccessToken(): string | null {
     }
   }
 
-  // 2. Try localStorage
+  
   try {
     const direct = localStorage.getItem("cleanones_client_access_token") || localStorage.getItem("token");
     if (direct) return direct;
@@ -35,10 +33,10 @@ export function getAccessToken(): string | null {
       if (parsed?.token) return parsed.token;
     }
   } catch {
-    // ignore
+    
   }
 
-  // 3. Try sessionStorage
+  
   try {
     const direct = sessionStorage.getItem("cleanones_client_access_token") || sessionStorage.getItem("token");
     if (direct) return direct;
@@ -49,19 +47,17 @@ export function getAccessToken(): string | null {
       if (parsed?.token) return parsed.token;
     }
   } catch {
-    // ignore
+    
   }
 
   return null;
 }
 
-/**
- * Retrieve refresh token from client-side cookie, localStorage, or sessionStorage
- */
+
 export function getRefreshToken(): string | null {
   if (typeof window === "undefined") return null;
 
-  // 1. Try cookie
+  
   if (typeof document !== "undefined") {
     const value = `; ${document.cookie}`;
     const parts = value.split("; cleanones_client_refresh_token=");
@@ -71,7 +67,7 @@ export function getRefreshToken(): string | null {
     }
   }
 
-  // 2. Try localStorage
+  
   try {
     const direct = localStorage.getItem("cleanones_client_refresh_token");
     if (direct) return direct;
@@ -81,10 +77,10 @@ export function getRefreshToken(): string | null {
       if (parsed?.refreshToken || parsed?.refresh_token) return parsed.refreshToken || parsed.refresh_token;
     }
   } catch {
-    // ignore
+    
   }
 
-  // 3. Try sessionStorage
+  
   try {
     const direct = sessionStorage.getItem("cleanones_client_refresh_token");
     if (direct) return direct;
@@ -94,19 +90,17 @@ export function getRefreshToken(): string | null {
       if (parsed?.refreshToken || parsed?.refresh_token) return parsed.refreshToken || parsed.refresh_token;
     }
   } catch {
-    // ignore
+    
   }
 
   return null;
 }
 
-/**
- * Save access & refresh tokens to client cookies based on rememberMe preference
- */
+
 export function setAuthCookies(accessToken: string, refreshToken?: string, rememberMe = false) {
   if (typeof document === "undefined") return;
   const secure = window.location.protocol === "https:" ? " Secure;" : "";
-  // If rememberMe: persistent cookie for 30 days. Otherwise: browser session cookie (no max-age).
+  
   const maxAgeAccess = rememberMe ? ` max-age=${86400 * 30};` : "";
   const maxAgeRefresh = rememberMe ? ` max-age=${86400 * 30};` : "";
 
@@ -117,9 +111,7 @@ export function setAuthCookies(accessToken: string, refreshToken?: string, remem
   document.cookie = `cleanones_client_remember=${rememberMe ? "1" : "0"}; path=/; SameSite=Lax;${maxAgeRefresh}${secure}`;
 }
 
-/**
- * Clear client-side authentication cookies, localStorage, and sessionStorage
- */
+
 export function clearAuthCookies() {
   if (typeof document === "undefined") return;
   document.cookie = "cleanones_client_access_token=; path=/; max-age=0;";
@@ -131,7 +123,7 @@ export function clearAuthCookies() {
     localStorage.removeItem("cleanones_client_refresh_token");
     localStorage.removeItem("token");
   } catch {
-    // ignore
+    
   }
   try {
     sessionStorage.removeItem("cleanones-client-user");
@@ -139,7 +131,7 @@ export function clearAuthCookies() {
     sessionStorage.removeItem("cleanones_client_refresh_token");
     sessionStorage.removeItem("token");
   } catch {
-    // ignore
+    
   }
 }
 
@@ -167,7 +159,7 @@ const baseQueryWithReauth: BaseQueryFn<
   if (result.error && (result.error.status === 401 || result.error.status === 403) && !isAuthEndpoint) {
     const refreshed = await refreshSession();
     if (refreshed.success) {
-      // Retry original request with newly acquired token
+      
       result = await rawBaseQuery(args, api, extraOptions);
     } else {
       if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {

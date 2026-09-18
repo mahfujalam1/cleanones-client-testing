@@ -17,7 +17,7 @@ export const store = configureStore({
     notes: notesReducer,
     schedule: scheduleReducer,
     [baseApi.reducerPath]: baseApi.reducer,
-    // Retain legacy clientApi for compatibility with unmigrated views
+    
     [clientApi.reducerPath]: clientApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -46,7 +46,7 @@ export interface ClientRosterData {
   cleaning_plans: RosterCleaningPlan[];
 }
 
-/** Flattened shift used by day/week/month views and the details modal */
+
 export interface Shift {
   id: string;
   shiftId?: string | null;

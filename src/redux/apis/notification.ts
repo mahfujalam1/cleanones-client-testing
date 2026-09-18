@@ -20,7 +20,7 @@ const buildQueryString = (params?: GetNotificationsParams): string => {
 
 export const notificationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Returns { success, message, data: { meta, result: NotificationItem[] } }
+    
     getNotifications: builder.query<
       ApiResponse<PaginatedResult<NotificationItem>>,
       GetNotificationsParams | void

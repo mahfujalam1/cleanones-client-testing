@@ -1,9 +1,6 @@
 import type { Config } from "tailwindcss";
 
-/**
- * Visual tokens aligned with the CleanOnes reference (Ainomiq) system.
- * Colors / radius / type only — no behavior.
- */
+
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
@@ -13,13 +10,13 @@ const config: Config = {
         heading: ["var(--font-inter)", "sans-serif"],
       },
       fontSize: {
-        /* Explicit hierarchy at 15px root */
-        xs: ["0.75rem", { lineHeight: "1.35" }], // 11.25px labels / captions
-        sm: ["0.875rem", { lineHeight: "1.45" }], // 13.125px body / controls
-        base: ["1rem", { lineHeight: "1.55" }], // 15px default body
-        lg: ["1.125rem", { lineHeight: "1.35" }], // section titles
+        
+        xs: ["0.75rem", { lineHeight: "1.35" }], 
+        sm: ["0.875rem", { lineHeight: "1.45" }], 
+        base: ["1rem", { lineHeight: "1.55" }], 
+        lg: ["1.125rem", { lineHeight: "1.35" }], 
         xl: ["1.25rem", { lineHeight: "1.3" }],
-        "2xl": ["1.5rem", { lineHeight: "1.25" }], // page titles
+        "2xl": ["1.5rem", { lineHeight: "1.25" }], 
       },
       colors: {
         background: "#FFFFFF",

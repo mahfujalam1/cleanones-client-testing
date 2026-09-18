@@ -21,7 +21,7 @@ import type {
   ClientLocationSummary,
 } from "@/services/actions/client";
 
-/* ---------------------------------------------------------------- helpers */
+
 
 export function locationIdOf(location: any) {
   if (!location) return "";
@@ -56,7 +56,7 @@ export function formatLabel(value: string) {
   return value.replaceAll("_", " ");
 }
 
-/* ------------------------------------------------------------------ rooms */
+
 
 export function RoomCard({ room, onClick }: { room: ClientLocationRoom; onClick: () => void }) {
   const roomName = roomNameOf(room);
@@ -252,7 +252,7 @@ function RoomDetailStat({ icon, label, value }: { icon: ReactNode; label: string
   );
 }
 
-/* -------------------------------------------------------------- skeletons */
+
 
 export function LocationGridSkeleton() {
   return (

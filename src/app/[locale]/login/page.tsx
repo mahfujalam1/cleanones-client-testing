@@ -49,7 +49,7 @@ export default function LoginPage() {
 
   const [loginMutation, { isLoading: loading }] = useLoginMutation();
 
-  // Redirect to dashboard if user is already authenticated
+  
   useEffect(() => {
     if (initialized && isAuthenticated) {
       router.replace(`/${locale}`);
@@ -90,14 +90,14 @@ export default function LoginPage() {
           refreshToken: refreshToken,
         };
 
-        // Save to localStorage or sessionStorage based on rememberMe
+        
         saveStoredUser(user, rememberMe);
         setAuthCookies(accessToken, refreshToken, rememberMe);
 
         dispatch(loginSuccess(user));
         dispatch(setActiveTab("dashboard"));
         message.success(rootT.actionFeedback.loginSuccess);
-        // router.push(`/${locale}`);
+        
         window.location.href = `/${locale}`;
       } else {
         message.error(result.message || rootT.actionFeedback.loginFailed);

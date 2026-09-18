@@ -33,7 +33,7 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
           userToSet.token = token;
         }
 
-        // Keep cookies synchronized if token exists
+        
         if (userToSet.access_token) {
           const refreshToken = getRefreshToken();
           const isRemembered =

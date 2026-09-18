@@ -11,7 +11,7 @@ interface SearchFieldProps {
   autoFocus?: boolean;
 }
 
-/** Search input styled to match the portal rather than Ant Design's default chrome. */
+
 export function SearchField({ value, onChange, placeholder, className = "", autoFocus }: SearchFieldProps) {
   return (
     <div className={`relative ${className}`}>
@@ -43,11 +43,11 @@ interface ListPaginationProps {
   limit: number;
   total: number;
   onPageChange: (page: number) => void;
-  /** Plural noun shown in the range summary, e.g. "locations". */
+  
   label?: string;
 }
 
-/** Windowed pager: always shows at most five numbers around the current page. */
+
 function pageWindow(page: number, pages: number) {
   const size = Math.min(5, pages);
   const start = Math.max(1, Math.min(page - Math.floor(size / 2), pages - size + 1));

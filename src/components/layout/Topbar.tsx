@@ -29,7 +29,7 @@ export function Topbar() {
   const locale = (params?.locale as string) || "en";
   const t = getTranslation(locale);
 
-  // Map activeTab id to translated page titles
+  
   const tabTitles: Record<string, string> = {
     dashboard: t.titles.dashboard,
     locations: t.titles.locations,
@@ -121,7 +121,7 @@ export function Topbar() {
           }
         }
       } catch {
-        // ignore storage errors
+        
       }
     }
   }, [profileRes, dispatch]);
@@ -190,7 +190,7 @@ export function Topbar() {
 
   return (
     <header className="flex h-14 shrink-0 select-none items-center justify-between gap-2 border-b border-border bg-white px-3 sm:px-4 lg:px-6">
-      {/* Left side: Hamburger (mobile) & Section Title */}
+      
       <div className="flex min-w-0 items-center gap-2 sm:gap-4">
         <Button
           type="default"
@@ -210,9 +210,9 @@ export function Topbar() {
         </h2>
       </div>
 
-      {/* Right side: Language selection, Notifications, & User profile dropdown */}
+      
       <div className="flex shrink-0 items-center gap-1.5 sm:gap-3.5">
-        {/* Language Selector Dropdown */}
+        
         <Dropdown menu={{ items: languageItems }} trigger={["click"]} placement="bottomRight">
           <Button
             type="default"
@@ -224,7 +224,7 @@ export function Topbar() {
           </Button>
         </Dropdown>
 
-        {/* Notifications Icon with Dropdown */}
+        
         <Dropdown menu={{ items: notificationItems }} trigger={["click"]} placement="bottomRight">
           <Button
             type="default"
@@ -237,7 +237,7 @@ export function Topbar() {
           </Button>
         </Dropdown>
 
-        {/* User profile & Logout button */}
+        
         {(user || profileRes) && (
           <Dropdown
             menu={{

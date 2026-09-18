@@ -34,7 +34,7 @@ export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsMo
         <div className="mt-3 h-56 animate-pulse rounded-lg border border-slate-200 bg-slate-100" />
       ) : (
         <div className="space-y-4 pt-2 text-xs text-slate-700">
-          {/* Header row */}
+          
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <div className="flex items-center gap-2">
@@ -47,7 +47,7 @@ export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsMo
             </div>
           </div>
 
-          {/* Description */}
+          
           <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3.5 space-y-1">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{t.services.description}</p>
             <p className="text-xs font-medium text-slate-800 leading-relaxed whitespace-pre-line">
@@ -55,7 +55,7 @@ export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsMo
             </p>
           </div>
 
-          {/* Meta specs */}
+          
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 rounded-xl border border-slate-200 bg-white p-3.5 text-xs text-slate-600">
             {item.date_time && (
               <div className="flex items-start gap-1.5">
@@ -88,7 +88,7 @@ export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsMo
             )}
           </div>
 
-          {/* Tasks List */}
+          
         </div>
       )}
     </Modal>

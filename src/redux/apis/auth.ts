@@ -25,7 +25,7 @@ export const authApi = baseApi.injectEndpoints({
             setAuthCookies(data.data.accessToken, data.data.refreshToken);
           }
         } catch {
-          // Handled by caller
+          
         }
       },
     }),
@@ -42,7 +42,7 @@ export const authApi = baseApi.injectEndpoints({
             setAuthCookies(data.data.accessToken, data.data.refreshToken);
           }
         } catch {
-          // Handled by caller
+          
         }
       },
     }),
@@ -85,7 +85,7 @@ export const authApi = baseApi.injectEndpoints({
             setAuthCookies(data.data.accessToken, data.data.refreshToken);
           }
         } catch {
-          // Handled by caller
+          
         }
       },
     }),

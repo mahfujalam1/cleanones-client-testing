@@ -174,7 +174,7 @@ export const {
   useDeleteChatMessageMutation,
 } = chatApi;
 
-/** @deprecated Prefer useGetMyChatsQuery — kept for Sidebar unread badge */
+
 export const useGetClientConversationsQuery = useGetMyChatsQuery;
 export const useGetClientConversationParticipantsQuery = useGetChatMembersQuery;
 export const useGetClientMessagesQuery = useGetChatMessagesQuery;

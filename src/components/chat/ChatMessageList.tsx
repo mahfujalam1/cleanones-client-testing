@@ -53,7 +53,7 @@ export function ChatMessageList({
             const senderId =
               typeof message.sender === "object" ? message.sender._id : message.sender;
 
-            // Client portal: own messages are from the client role / current user
+            
             const ownMessage =
               message.sender_role === "client" ||
               (Boolean(currentUserId) && senderId === currentUserId) ||

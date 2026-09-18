@@ -68,7 +68,7 @@ export default function ChatPage() {
 
   const [deletingMsg, setDeletingMsg] = useState<ChatMessage | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
-  /** Mobile master-detail: list first, open thread after tapping a conversation */
+  
   const [mobileThreadOpen, setMobileThreadOpen] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
@@ -436,7 +436,7 @@ export default function ChatPage() {
       </header>
 
       <div className="grid min-h-0 flex-1 overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[310px_minmax(0,1fr)_270px]">
-        {/* Conversation list — full screen on mobile until a chat is opened */}
+        
         <div
           className={`min-h-0 h-full flex-col ${
             mobileThreadOpen ? "hidden lg:flex" : "flex"
@@ -453,7 +453,7 @@ export default function ChatPage() {
           />
         </div>
 
-        {/* Message thread — full screen on mobile after selecting a chat */}
+        
         <section
           className={`min-h-0 h-full flex-col bg-white ${
             mobileThreadOpen ? "flex" : "hidden lg:flex"

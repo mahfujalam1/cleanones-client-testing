@@ -65,7 +65,7 @@ export default function DashboardPage() {
   const [view, setView] = useState<"hours" | "rooms" | "tasks">("hours");
   const [statsRange, setStatsRange] = useState<"today" | "this_week" | "this_month">("this_week");
 
-  // 1. Live Active Progress (Today Only)
+  
   const {
     data: activeProgressRes,
     isLoading: isActiveLoading,
@@ -73,15 +73,15 @@ export default function DashboardPage() {
     pollingInterval: 30000,
   });
 
-  // 2. Historical Shift Stats
+  
   const { data: shiftStatsRes, isLoading: isStatsLoading } = useGetClientShiftStatsQuery({
     range: statsRange,
   });
 
-  // 3. Static All-Time Inventory Totals
+  
   const { data: totalsRes, isLoading: isTotalsLoading } = useGetClientTotalsQuery();
 
-  // Profile / Greeting info
+  
   const { data: profileRes } = useGetMyProfileQuery();
   const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -135,7 +135,7 @@ export default function DashboardPage() {
   const { summary, shifts, status: todayStatus } = activeData;
   const progressPct = Math.min(100, Math.max(0, summary.progress_percentage || 0));
 
-  // Determine status display for today
+  
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "active":
@@ -174,7 +174,7 @@ export default function DashboardPage() {
   const primaryShift = shifts?.[0];
   const primaryLocation = primaryShift?.location_name || "Designated Location";
 
-  // Count active on-site workers right now
+  
   const checkedInWorkersCount = shifts.reduce((acc, shift) => {
     return acc + (shift.workers?.filter((w) => w.is_checked_in).length || 0);
   }, 0);
@@ -185,7 +185,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-4 text-xs text-slate-700">
-      {/* 1. Header with greeting and primary action */}
+      
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-base font-semibold text-slate-900">
@@ -206,10 +206,10 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* 2. Today's Live Active Progress Overview */}
+      
       <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
         <div className="grid lg:grid-cols-[1.35fr_.65fr]">
-          {/* Left Progress Column */}
+          
           <div className="p-4 sm:p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
@@ -321,7 +321,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Right Status Panel */}
+          
           <div className="flex flex-col justify-between border-t border-slate-200 bg-gradient-to-br from-sky-50/50 to-slate-50/70 p-4 lg:border-l lg:border-t-0 sm:p-5">
             <div>
               <div className="flex items-center gap-2">
@@ -372,7 +372,7 @@ export default function DashboardPage() {
 
 
 
-      {/* 4. Shift Execution & History Stats (GET /client/shift-stats) */}
+      
       <section className="space-y-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -402,7 +402,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
-          {/* Completion Rate Card */}
+          
           <MetricCard
             icon={<TbSparkles />}
             label={t.dashboard.completionRate || "Completion Rate"}
@@ -431,7 +431,7 @@ export default function DashboardPage() {
               )}
           />
 
-          {/* Total Shifts */}
+          
           <MetricCard
             icon={<TbCalendar />}
             label={t.dashboard.totalShiftsCard || "Total Shifts"}
@@ -449,7 +449,7 @@ export default function DashboardPage() {
             }
           />
 
-          {/* Completed Shifts */}
+          
           <MetricCard
             icon={<TbCheck />}
             label={t.dashboard.completedShiftsCard || "Completed Shifts"}
@@ -461,7 +461,7 @@ export default function DashboardPage() {
             }
           />
 
-          {/* Pending Shifts */}
+          
           <MetricCard
             icon={<TbHourglass />}
             label={t.dashboard.pendingShiftsCard || "Pending Shifts"}
@@ -475,7 +475,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 5. Service Scope & Inventory Overview (GET /client/totals) */}
+      
       <section className="space-y-2.5">
         <div>
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600">
@@ -526,7 +526,7 @@ export default function DashboardPage() {
           />
         </div>
       </section>
-      {/* 3. Today's Shifts & On-Site Specialists Detail (When shifts exist) */}
+      
       {shifts.length > 0 && (
         <section className="space-y-2.5">
           <div className="flex items-center justify-between">
@@ -570,7 +570,7 @@ export default function DashboardPage() {
                     </Tag>
                   </div>
 
-                  {/* Rooms & Tasks progress for shift */}
+                  
                   <div className="grid grid-cols-2 gap-2 my-2.5 text-[10px] text-slate-600 bg-slate-50 p-2 rounded-lg">
                     <div>
                       <span className="text-slate-400 block">Rooms Serviced</span>
@@ -586,7 +586,7 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  {/* Workers List */}
+                  
                   {shift.workers && shift.workers.length > 0 && (
                     <div className="space-y-1.5 pt-1">
                       <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">
@@ -629,7 +629,7 @@ export default function DashboardPage() {
           </div>
         </section>
       )}
-      {/* 6. Quick Action Links */}
+      
       <div className="grid gap-3 sm:grid-cols-3 pt-1">
         <Action onClick={() => go("/services")} icon={<TbPlus />} title={t.dashboard.extraServiceReq} />
         <Action onClick={() => go("/schedule")} icon={<TbCalendar />} title={t.dashboard.viewSchedule} />

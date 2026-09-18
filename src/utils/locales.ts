@@ -1,4 +1,4 @@
-/** Supported UI locales for the client portal. */
+
 export const SUPPORTED_LOCALES = [
   "en",
   "nl",
