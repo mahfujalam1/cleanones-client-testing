@@ -31,6 +31,8 @@ import { ChatHeader } from "@/components/chat/ChatHeader";
 import { ChatMessageList } from "@/components/chat/ChatMessageList";
 import { ChatMessageInput } from "@/components/chat/ChatMessageInput";
 import { DeleteMessageModal } from "@/components/chat/DeleteMessageModal";
+import { ChatPageHeader } from "@/components/chat/ChatPageHeader";
+import { ChatEmptyThread } from "@/components/chat/ChatEmptyThread";
 import { uploadConversationFiles, deleteUploadedFiles } from "@/services/actions/files";
 
 function decodeUserIdFromToken(): string {
@@ -430,10 +432,7 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-[calc(100dvh-6.5rem)] min-h-0 flex-col gap-3 sm:min-h-[580px]">
-      <header className={mobileThreadOpen ? "hidden lg:block" : "block"}>
-        <h1 className="text-lg font-bold text-slate-900">{t.chat.pageTitle}</h1>
-        <p className="text-xs text-slate-500">{t.chat.subtitle}</p>
-      </header>
+      <ChatPageHeader title={t.chat.pageTitle} subtitle={t.chat.subtitle} hidden={mobileThreadOpen} />
 
       <div className="grid min-h-0 flex-1 overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[310px_minmax(0,1fr)_270px]">
         
@@ -487,9 +486,7 @@ export default function ChatPage() {
               />
             </>
           ) : (
-            <div className="flex flex-1 items-center justify-center text-sm text-slate-400 px-4 text-center">
-              Select a conversation from the list to start messaging.
-            </div>
+            <ChatEmptyThread />
           )}
         </section>
 

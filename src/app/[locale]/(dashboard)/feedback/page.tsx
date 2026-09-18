@@ -3,13 +3,10 @@
 import { useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { getTranslation } from "@/utils/translations";
-import { Button, Card, Input, Rate } from "antd";
-import {
-  type FeedbackRecord,
-  FeedbackHistoryItem,
-} from "@/components/feedback/FeedbackHistoryItem";
-
-const { TextArea } = Input;
+import { type FeedbackRecord } from "@/components/feedback/FeedbackHistoryItem";
+import { FeedbackStatsRow } from "@/components/feedback/FeedbackStatsRow";
+import { FeedbackForm } from "@/components/feedback/FeedbackForm";
+import { FeedbackHistoryList } from "@/components/feedback/FeedbackHistoryList";
 
 export default function FeedbackPage() {
   const params = useParams<{ locale: string }>();
@@ -58,71 +55,11 @@ export default function FeedbackPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {ratingStats.map((stat, index) => (
-          <Card
-            key={stat.label}
-            className="border-slate-200 text-center"
-            styles={{ body: { padding: 16 } }}
-          >
-            <p className="text-lg font-extrabold leading-tight text-slate-800">{stat.value}</p>
-            {index === 0 && <Rate disabled value={5} className="mt-1 text-sm" />}
-            <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-500">
-              {stat.label}
-            </p>
-            <p className="mt-0.5 text-[10px] text-slate-400">{stat.sub}</p>
-          </Card>
-        ))}
-      </div>
+      <FeedbackStatsRow stats={ratingStats} />
 
-      <Card className="border-slate-200" styles={{ body: { padding: 18 } }}>
-        <div className="border-b border-slate-200 pb-3">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-slate-800">
-            {t.feedback.submitFeedback}
-          </h2>
-          <p className="mt-0.5 text-[11px] text-slate-500">
-            {t.feedback.ratingPrompt}
-          </p>
-        </div>
+      <FeedbackForm t={t} rating={rating} setRating={setRating} comment={comment} setComment={setComment} onSubmit={handleSubmit} />
 
-        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-          <Rate value={rating} onChange={setRating} className="text-xl" aria-label="Service rating" />
-
-          <label className="block text-xs font-semibold text-slate-600">
-            <span className="mb-1.5 block">{t.feedback.commentsPlaceholder}</span>
-            <TextArea
-              value={comment}
-              onChange={(event) => setComment(event.target.value)}
-              placeholder={t.feedback.commentsPlaceholder}
-              autoSize={{ minRows: 4, maxRows: 7 }}
-              maxLength={1000}
-              showCount
-            />
-          </label>
-
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={rating === 0}
-            className="text-xs font-semibold"
-          >
-            {t.feedback.submitBtn}
-          </Button>
-        </form>
-      </Card>
-
-      <Card className="border-slate-200" styles={{ body: { padding: 0 } }}>
-        <div className="border-b border-slate-200 bg-slate-50/70 px-4 py-3">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-slate-800">
-            {t.feedback.recentFeedback}
-          </h2>
-        </div>
-        <div className="divide-y divide-slate-200">
-          {history.map((record) => (
-            <FeedbackHistoryItem key={record.id} record={record} />
-          ))}
-        </div>
-      </Card>
+      <FeedbackHistoryList title={t.feedback.recentFeedback} records={history} />
     </div>
   );
 }
