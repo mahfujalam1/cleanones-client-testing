@@ -17,36 +17,7 @@ export default function FeedbackPage() {
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [history, setHistory] = useState<FeedbackRecord[]>([
-    {
-      id: "1",
-      date: "Jun 28, 2026",
-      time: "02:30 PM",
-      location: "Floor 3 - Main Office",
-      rating: 5,
-      label: "Excellent",
-      comment:
-        "Excellent work as always. The team was thorough and professional. Conference rooms look spotless!",
-    },
-    {
-      id: "2",
-      date: "Jun 24, 2026",
-      time: "11:30 AM",
-      location: "Ground Floor - Lobby",
-      rating: 4,
-      label: "Very Good",
-      comment: "Lobby looks amazing, but please check the dispenser in washrooms.",
-    },
-    {
-      id: "3",
-      date: "Jun 20, 2026",
-      time: "04:00 PM",
-      location: "Floor 2 - Kitchen",
-      rating: 5,
-      label: "Excellent",
-      comment: "The deep clean of the kitchen was perfect. Thank you team!",
-    },
-  ]);
+  const [history, setHistory] = useState<FeedbackRecord[]>([]);
 
   const ratingStats = [
     { label: t.feedback.rating, value: "4.7 / 5", sub: t.feedback.ratingPrompt },
