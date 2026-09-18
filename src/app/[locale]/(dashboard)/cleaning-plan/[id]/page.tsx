@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { getTranslation } from "@/utils/translations";
-import { useGetClientCleaningPlanDetailsQuery } from "@/redux/api/clientApi";
+import { useGetClientCleaningPlanDetailsQuery } from "@/redux/apis/clientCleaningPlans";
 import { TbClipboardList, TbClock, TbDoor, TbCheck, TbCamera, TbMapPin, TbCalendar, TbRefresh, TbSparkles, TbInfoCircle } from "react-icons/tb";
 
 export default function CleaningPlanDetailsPage() {

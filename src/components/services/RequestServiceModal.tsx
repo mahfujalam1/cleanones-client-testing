@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Modal, Select } from "antd";
 import { TbSparkles } from "react-icons/tb";
-import { clientApi } from "@/redux/api/clientApi";
+import { useGetClientScheduleQuery } from "@/redux/apis/clientSchedule";
 import {
   useCreateAdditionalTaskMutation,
   useUpdateAdditionalTaskMutation,
@@ -36,7 +36,7 @@ export function RequestServiceModal({
   const [description, setDescription] = useState(initialDescription);
   const [dateTime, setDateTime] = useState<string>(new Date().toISOString().slice(0, 16));
 
-  const { data: plansRes, isFetching: loadingPlans } = clientApi.useGetClientScheduleQuery({ limit: 100 });
+  const { data: plansRes, isFetching: loadingPlans } = useGetClientScheduleQuery({ limit: 100 });
   const plans = Array.isArray(plansRes?.data?.result) ? plansRes.data.result : [];
 
   const [submitting, setSubmitting] = useState(false);

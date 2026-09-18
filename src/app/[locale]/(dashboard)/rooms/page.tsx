@@ -15,7 +15,7 @@ import {
   TbUser,
   TbUsers,
 } from "react-icons/tb";
-import { useGetClientMyLiveStatusQuery } from "@/redux/api/clientApi";
+import { useGetClientMyLiveStatusQuery } from "@/redux/apis/clientOverview";
 
 
 interface ShiftRoom {

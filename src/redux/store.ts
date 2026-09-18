@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./baseApi";
-import { clientApi } from "./api/clientApi";
+import { clientApi } from "./apis/clientApi";
 import authReducer from "./slices/auth";
 import locationReducer from "./slices/location";
 import uiReducer from "./slices/ui";

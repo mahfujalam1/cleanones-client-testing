@@ -1,40 +1,46 @@
-import { clientApi } from "@/redux/api/clientApi";
+import { clientApi } from "@/redux/apis/clientApi";
 import { authenticatedRequest, type ActionResult } from "./auth";
 
+export { clientApi };
 export {
-  clientApi,
   useGetClientOverviewQuery,
   useGetClientActiveProgressQuery,
   useGetClientShiftStatsQuery,
   useGetClientTotalsQuery,
   useGetClientLiveStatusQuery,
   useGetClientShiftLiveStatusQuery,
+} from "@/redux/apis/clientOverview";
+export {
   useGetClientScheduleQuery,
   useGetClientScheduleVisitQuery,
   useGetClientScheduleRosterQuery,
   useGetClientRosterQuery,
+} from "@/redux/apis/clientSchedule";
+export {
   useGetClientLocationsQuery,
   useGetClientLocationDetailsQuery,
   useGetClientLocationRoomsQuery,
   useGetClientLocationRoomDetailsQuery,
+} from "@/redux/apis/clientLocations";
+export {
   useGetClientExtraServicesQuery,
   useGetClientExtraServiceQuery,
   useGetClientExtraServiceLocationsQuery,
   useGetClientExtraServiceRoomsQuery,
-  useGetClientCleaningPlansQuery,
   useCreateClientExtraServiceMutation,
   useUpdateClientExtraServiceMutation,
   useDeleteClientExtraServiceMutation,
+} from "@/redux/apis/clientExtraServices";
+export { useGetClientCleaningPlansQuery } from "@/redux/apis/clientCleaningPlans";
+export {
   useGetClientNotificationsQuery,
   useGetClientNotificationQuery,
   useReadClientNotificationMutation,
   useDeleteClientNotificationMutation,
   useBulkDeleteClientNotificationsMutation,
-  useGetClientProfileQuery,
-  useUpdateClientProfileMutation,
-  useGetClientSettingsQuery,
-  useUpdateClientSettingsMutation,
-} from "@/redux/api/clientApi";
+} from "@/redux/apis/clientNotifications";
+export { useGetClientProfileQuery, useUpdateClientProfileMutation } from "@/redux/apis/clientProfile";
+export { useGetClientSettingsQuery, useUpdateClientSettingsMutation } from "@/redux/apis/clientSettings";
 
 const json = (value: unknown) => ({
   headers: { "Content-Type": "application/json" },
