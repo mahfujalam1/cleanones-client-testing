@@ -99,7 +99,6 @@ export default function DashboardPage() {
   const { summary, shifts, status: todayStatus } = activeData;
   const progressPct = Math.min(100, Math.max(0, summary.progress_percentage || 0));
 
-
   const statusConfig = getStatusBadge(todayStatus, t);
   const primaryShift = shifts?.[0];
   const primaryLocation = primaryShift?.location_name || "Designated Location";

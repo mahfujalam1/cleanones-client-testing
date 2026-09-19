@@ -36,7 +36,7 @@ export function ActiveProgressPanel({
               <>
                 {formatHours(summary.total_worked_hours)}{" "}
                 <span className="text-slate-400 font-medium text-base">
-                  / {formatHours(summary.total_estimated_hours)} {t.dashboard.hours}
+                  / {formatHours(summary.total_estimated_hours)}
                 </span>
               </>
             )}

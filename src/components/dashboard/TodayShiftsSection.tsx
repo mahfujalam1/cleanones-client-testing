@@ -3,6 +3,7 @@ import { TbBuilding, TbClock } from "react-icons/tb";
 import { formatHours, formatShiftTime } from "@/components/dashboard/dashboardHelpers";
 
 export function TodayShiftsSection({ shifts, todayStatus }: { shifts: any[]; todayStatus: string }) {
+
   return (
     <section className="space-y-2.5">
       <div className="flex items-center justify-between">
@@ -91,9 +92,13 @@ function ShiftCard({ shift }: { shift: any }) {
                   </span>
                 </div>
                 <div className="text-right text-[10px]">
-                  {worker.is_checked_in ? (
+                  {(worker?.check_in_at && !worker?.check_out_at) ? (
                     <span className="font-semibold text-emerald-600">
                       {formatHours(worker.worked_hours)} logged
+                    </span>
+                  ) : worker?.check_out_at ? (
+                    <span className="font-semibold text-emerald-600">
+                      {worker?.worked_hours} completed
                     </span>
                   ) : (
                     <span className="text-slate-400">Awaiting Check-in</span>
