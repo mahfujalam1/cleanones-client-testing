@@ -167,14 +167,14 @@ export function MonthView({
                                 type="button"
                                 key={shift.id}
                                 onClick={() => setSelectedShift(shift)}
-                                className="w-full rounded border border-dashed border-amber-300 bg-amber-50/90 px-1 py-1 text-left hover:bg-amber-100 transition-colors mb-1"
-                                title="Not yet staffed — Schedule & specialists pending"
+                                className="w-full rounded border border-slate-200 bg-white px-1.5 py-1 text-left hover:border-amber-300 hover:bg-amber-50/40 transition-colors mb-1"
+                                title={`${shift.planTitle} — Worker not assigned`}
                               >
-                                <p className="text-[10px] font-bold text-amber-900 leading-tight truncate">
-                                  {r?.projected || "Unstaffed"}
+                                <p className="text-[10px] font-bold text-slate-800 leading-tight truncate">
+                                  {shift.planTitle || "Scheduled"}
                                 </p>
-                                <p className="text-[9px] text-amber-700/80">
-                                  Pending
+                                <p className="text-[9px] text-amber-700 font-medium truncate">
+                                  Worker not assigned
                                 </p>
                               </button>
                             );

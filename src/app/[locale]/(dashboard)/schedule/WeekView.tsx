@@ -7,6 +7,7 @@ import {
   Shift,
   RosterCleaningPlan,
   isOvernightShift,
+  hoursFromMinutes,
 } from "./types";
 import { getTranslation } from "@/utils/translations";
 import { ShiftDetailsModal } from "./ShiftDetailsModal";
@@ -179,25 +180,34 @@ export function WeekView({
                             );
 
                             if (isUnstaffed) {
+                              const durationLabel = shift.durationMinutes
+                                ? `${hoursFromMinutes(shift.durationMinutes)}h`
+                                : null;
+
                               return (
                                 <button
                                   type="button"
                                   key={shift.id}
                                   onClick={() => setSelectedShift(shift)}
-                                  className="w-full rounded-md border border-dashed border-amber-300 bg-amber-50/90 px-2 py-1.5 text-left hover:bg-amber-100/80 transition-colors"
-                                  title="Not yet staffed — Schedule & specialists pending"
+                                  className="w-full rounded-md border border-slate-200 bg-white p-2 text-left hover:border-amber-300 hover:bg-amber-50/40 shadow-xs transition-all"
+                                  title={`${shift.planTitle} — Worker not assigned`}
                                 >
-                                  <div className="flex items-center gap-1">
-                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
-                                    <p className="text-[11px] font-bold text-amber-900 truncate">
-                                      {r?.projected || "Not yet staffed"}
-                                    </p>
+                                  <div className="flex items-center justify-between gap-1 mb-1">
+                                    <span className="inline-flex items-center gap-1 rounded bg-amber-50 px-1.5 py-0.5 text-[9px] font-semibold text-amber-700 border border-amber-200">
+                                      <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                                      Worker Not Assigned
+                                    </span>
+                                    {durationLabel && (
+                                      <span className="text-[10px] font-medium text-slate-500">
+                                        ~{durationLabel}
+                                      </span>
+                                    )}
                                   </div>
-                                  <p className="text-[10px] text-amber-700/80 mt-0.5">
-                                    Time &amp; crew pending
+                                  <p className="text-[11px] font-bold text-slate-800 truncate leading-tight">
+                                    {shift.planTitle}
                                   </p>
-                                  <p className="mt-1 text-[10px] text-slate-500 flex items-center gap-0.5 truncate">
-                                    <MdLocationOn className="text-amber-600 shrink-0" />
+                                  <p className="mt-1 text-[10px] text-slate-400 flex items-center gap-0.5 truncate">
+                                    <MdLocationOn className="text-slate-400 shrink-0 text-xs" />
                                     {shift.location}
                                   </p>
                                 </button>

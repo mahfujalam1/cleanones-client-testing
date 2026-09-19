@@ -115,7 +115,7 @@ export function mapRosterToShifts(plans: RosterCleaningPlan[]): Shift[] {
         shiftId: shift.shift_id,
         planId: plan.plan_id,
         planTitle: plan.plan_title,
-        workerName: leader?.name || (isVirtual ? "Unstaffed" : plan.plan_title),
+        workerName: leader?.name || plan.plan_title,
         workerId: leader?.worker_id,
         workerRole: leader?.role,
         location: plan.location_name,

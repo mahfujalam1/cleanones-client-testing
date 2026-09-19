@@ -8,6 +8,7 @@ import {
   RosterCleaningPlan,
   localMinutesOfDay,
   isOvernightShift,
+  hoursFromMinutes,
 } from "./types";
 import { getTranslation } from "@/utils/translations";
 import { ShiftDetailsModal } from "./ShiftDetailsModal";
@@ -175,21 +176,30 @@ export function DayView({
                           );
 
                           if (isUnstaffed) {
+                            const durationLabel = shift.durationMinutes
+                              ? `${hoursFromMinutes(shift.durationMinutes)}h`
+                              : null;
+
                             return (
                               <button
                                 type="button"
                                 key={shift.id}
                                 onClick={() => setSelectedShift(shift)}
-                                className="absolute top-2 bottom-2 left-2 rounded-md flex items-center gap-1.5 px-2.5 cursor-pointer border border-dashed border-amber-300 bg-amber-50/90 text-amber-900 hover:bg-amber-100 hover:ring-2 hover:ring-amber-200 active:scale-[0.99] transition-all z-10 text-left focus-visible:outline-none"
-                                title="Not yet staffed — Schedule & specialists pending"
+                                className="absolute top-2 bottom-2 left-2 rounded-md flex items-center gap-2 px-3 cursor-pointer border border-amber-200 bg-amber-50/80 text-slate-800 hover:bg-amber-100 hover:border-amber-300 shadow-xs active:scale-[0.99] transition-all z-10 text-left focus-visible:outline-none"
+                                title={`${shift.planTitle} — Worker not assigned`}
                               >
-                                <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
-                                <span className="text-[11px] font-bold text-amber-900 truncate pointer-events-none select-none">
-                                  {r?.projected || "Not yet staffed"}
+                                <span className="inline-block h-2 w-2 rounded-full bg-amber-500 shrink-0" />
+                                <span className="text-[11px] font-bold text-slate-800 truncate pointer-events-none select-none">
+                                  {shift.planTitle || "Scheduled Service"}
                                 </span>
-                                <span className="text-[10px] text-amber-700/80 pointer-events-none select-none">
-                                  (Pending schedule)
+                                <span className="text-[10px] font-semibold text-amber-800 bg-amber-100/80 px-1.5 py-0.5 rounded border border-amber-200 pointer-events-none select-none">
+                                  Worker Not Assigned
                                 </span>
+                                {durationLabel && (
+                                  <span className="text-[10px] text-slate-500 pointer-events-none select-none">
+                                    (~{durationLabel})
+                                  </span>
+                                )}
                               </button>
                             );
                           }
@@ -246,11 +256,11 @@ export function DayView({
       <div className="flex items-center gap-4 border-t border-slate-200 bg-slate-50 px-4 py-2 text-[10px] text-slate-500 shrink-0">
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-2 rounded-full bg-[#009EE2]" />
-          {r?.scheduledShift}
+          {r?.scheduledShift || "Scheduled shift (confirmed time)"}
         </div>
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-2 rounded-full bg-amber-500 border border-amber-400" />
-          {r?.projected || "Not yet staffed"}
+          Worker Not Assigned
         </div>
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-3 w-px bg-red-500" />

@@ -78,40 +78,44 @@ export function ShiftDetailsModal({ shift, locale, r, onClose }: ShiftDetailsMod
                 })}
               </span>
               <div className="flex items-center gap-1.5">
-                {shift.isVirtual && (
-                  <Tag className="m-0 text-[10px] font-semibold" color="default">
-                    {r?.projected || "Virtual"}
+                {shift.isVirtual || shift.status === "unstaffed" ? (
+                  <>
+                    <Tag color="blue" className="m-0 text-[10px] font-semibold">
+                      Scheduled Service
+                    </Tag>
+                    <Tag color="orange" className="m-0 text-[10px] font-semibold">
+                      Worker Not Assigned
+                    </Tag>
+                  </>
+                ) : (
+                  <Tag
+                    color={
+                      shift.status === "completed"
+                        ? "green"
+                        : shift.status === "in_progress"
+                          ? "processing"
+                          : shift.status === "cancelled"
+                            ? "error"
+                            : "blue"
+                    }
+                    className="m-0 text-[10px] font-semibold capitalize"
+                  >
+                    {shift.status?.replace("_", " ") || "Upcoming"}
                   </Tag>
                 )}
-                <Tag
-                  color={
-                    shift.status === "completed"
-                      ? "green"
-                      : shift.status === "in_progress"
-                        ? "processing"
-                        : shift.status === "cancelled"
-                          ? "error"
-                          : shift.status === "unstaffed" || shift.isVirtual
-                            ? "orange"
-                            : "blue"
-                  }
-                  className="m-0 text-[10px] font-semibold capitalize"
-                >
-                  {shift.status === "unstaffed"
-                    ? "Unstaffed"
-                    : shift.status?.replace("_", " ") || "Upcoming"}
-                </Tag>
               </div>
             </div>
 
             {shift.isVirtual || shift.status === "unstaffed" || !shift.startAt ? (
-              <div className="flex items-center gap-2 text-xs text-amber-800 border-t border-slate-200/60 pt-2">
+              <div className="flex items-center gap-2 text-xs text-slate-700 border-t border-slate-200/60 pt-2">
                 <TbClock className="text-amber-500 h-4 w-4 shrink-0" />
-                <span className="font-semibold">
-                  {r?.projected || "Not yet staffed"}
+                <span className="font-semibold text-slate-800">
+                  {shift.durationMinutes
+                    ? `Planned Duration: ~${hoursFromMinutes(shift.durationMinutes)}h`
+                    : "Scheduled Visit"}
                 </span>
-                <span className="text-[11px] text-slate-500">
-                  (Time &amp; specialists pending manager assignment)
+                <span className="text-[11px] text-amber-700">
+                  • Worker not assigned yet (time will be finalized once assigned)
                 </span>
               </div>
             ) : (
@@ -188,7 +192,10 @@ export function ShiftDetailsModal({ shift, locale, r, onClose }: ShiftDetailsMod
               {r?.assignedTeam} ({shift.assignedWorkers?.length || 0})
             </p>
             {(shift.assignedWorkers?.length ?? 0) === 0 ? (
-              <p className="text-xs text-slate-400">{r?.noWorkersAssigned || "No workers assigned yet"}</p>
+              <div className="flex items-center gap-2 rounded-md bg-amber-50/60 border border-amber-200 px-3 py-2.5 text-xs text-amber-800">
+                <span className="h-2 w-2 rounded-full bg-amber-500 shrink-0" />
+                <span>Worker not assigned yet. Specialists will be assigned by your coordinator prior to this shift.</span>
+              </div>
             ) : (
               <div className="space-y-1.5">
                 {shift.assignedWorkers!.map((w, idx) => (
