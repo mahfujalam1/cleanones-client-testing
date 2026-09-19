@@ -80,7 +80,7 @@ export function ShiftDetailsModal({ shift, locale, r, onClose }: ShiftDetailsMod
               <div className="flex items-center gap-1.5">
                 {shift.isVirtual && (
                   <Tag className="m-0 text-[10px] font-semibold" color="default">
-                    {r?.projected || "Projected"}
+                    {r?.projected || "Virtual"}
                   </Tag>
                 )}
                 <Tag
@@ -91,24 +91,40 @@ export function ShiftDetailsModal({ shift, locale, r, onClose }: ShiftDetailsMod
                         ? "processing"
                         : shift.status === "cancelled"
                           ? "error"
-                          : "blue"
+                          : shift.status === "unstaffed" || shift.isVirtual
+                            ? "orange"
+                            : "blue"
                   }
                   className="m-0 text-[10px] font-semibold capitalize"
                 >
-                  {shift.status?.replace("_", " ") || "Upcoming"}
+                  {shift.status === "unstaffed"
+                    ? "Unstaffed"
+                    : shift.status?.replace("_", " ") || "Upcoming"}
                 </Tag>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-slate-600 border-t border-slate-200/60 pt-2">
-              <TbClock className="text-slate-400 h-4 w-4 shrink-0" />
-              <span className="font-bold text-slate-800">
-                {shift.startTime} – {shift.endTime}
-              </span>
-              <span className="text-[11px] text-slate-400">
-                ({hoursFromMinutes(shift.durationMinutes || 0)}h {r?.duration || "duration"})
-              </span>
-            </div>
+            {shift.isVirtual || shift.status === "unstaffed" || !shift.startAt ? (
+              <div className="flex items-center gap-2 text-xs text-amber-800 border-t border-slate-200/60 pt-2">
+                <TbClock className="text-amber-500 h-4 w-4 shrink-0" />
+                <span className="font-semibold">
+                  {r?.projected || "Not yet staffed"}
+                </span>
+                <span className="text-[11px] text-slate-500">
+                  (Time &amp; specialists pending manager assignment)
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-xs text-slate-600 border-t border-slate-200/60 pt-2">
+                <TbClock className="text-slate-400 h-4 w-4 shrink-0" />
+                <span className="font-bold text-slate-800">
+                  {shift.startTime} – {shift.endTime}
+                </span>
+                <span className="text-[11px] text-slate-400">
+                  ({hoursFromMinutes(shift.durationMinutes || 0)}h {r?.duration || "duration"})
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="rounded-lg border border-slate-200 bg-white p-3 flex items-start gap-2.5">

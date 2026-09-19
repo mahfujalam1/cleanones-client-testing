@@ -20,22 +20,19 @@ export default function CleaningPlanDetailsPage() {
 
 
 
-  const dateObj = new Date(details.date_time || details.createdAt);
-  const formattedDate = dateObj.toLocaleDateString();
-  const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const endTimeStr = details.end_date ? new Date(details.end_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "End";
+  const createdDate = details?.createdAt ? new Date(details.createdAt).toLocaleDateString() : "";
 
-  const duration = details.total_duration ?? details.max_estimated_duration ?? 0;
-  const roomsCount = details.total_rooms ?? details.rooms?.length ?? 0;
-  const tasksCount = details.total_tasks ?? 0;
-  const photosCount = details.rooms?.reduce((acc: number, room: any) => {
+  const duration = details?.total_duration ?? details?.max_estimated_duration ?? 0;
+  const roomsCount = details?.total_rooms ?? details?.rooms?.length ?? 0;
+  const tasksCount = details?.total_tasks ?? 0;
+  const photosCount = details?.rooms?.reduce((acc: number, room: any) => {
     return acc + (room.tasks?.reduce((tAcc: number, task: any) => tAcc + (task.photo_requirements?.length || 0), 0) || 0);
   }, 0) || 0;
 
-  const locationName = details.location?.name || "Unknown Location";
-  const locationAddress = details.location?.address || "";
-  const rooms = details.rooms || [];
-  const additionalTasks = details.additional_tasks || [];
+  const locationName = details?.location?.name || "Unknown Location";
+  const locationAddress = details?.location?.address || "";
+  const rooms = details?.rooms || [];
+  const additionalTasks = details?.additional_tasks || [];
 
   if (isLoading) {
     return <CleaningPlanDetailsSkeleton />;
@@ -52,9 +49,7 @@ export default function CleaningPlanDetailsPage() {
     <div className="flex flex-col bg-slate-50/30 rounded-xl overflow-hidden border border-slate-200">
       <CleaningPlanDetailsHeader
         details={details}
-        formattedDate={formattedDate}
-        timeStr={timeStr}
-        endTimeStr={endTimeStr}
+        formattedDate={createdDate}
         onBack={() => router.back()}
       />
 

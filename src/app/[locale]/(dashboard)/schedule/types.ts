@@ -1,6 +1,12 @@
 export type RosterView = "day" | "week" | "month";
 
-export type ShiftStatus = "upcoming" | "in_progress" | "completed" | "cancelled" | string;
+export type ShiftStatus =
+  | "upcoming"
+  | "in_progress"
+  | "completed"
+  | "cancelled"
+  | "unstaffed"
+  | string;
 
 export interface RosterWorker {
   worker_id: string;
@@ -13,8 +19,8 @@ export interface RosterShift {
   shift_id: string | null;
   is_virtual: boolean;
   status: ShiftStatus;
-  start_time: string;
-  end_time: string;
+  start_time: string | null;
+  end_time: string | null;
   duration_minutes: number;
   rooms: { total: number; completed: number };
   tasks: { total: number; completed: number };
@@ -60,8 +66,8 @@ export interface Shift {
   date: string;
   startTime: string;
   endTime: string;
-  startAt: string;
-  endAt: string;
+  startAt: string | null;
+  endAt: string | null;
   durationMinutes?: number;
   status?: ShiftStatus;
   isVirtual?: boolean;
@@ -72,20 +78,25 @@ export interface Shift {
   assignedWorkers?: Array<{ name: string; role?: string }>;
 }
 
-export function formatTimeLabel(iso: string, locale = "en"): string {
+export function formatTimeLabel(iso?: string | null, locale = "en"): string {
+  if (!iso) return "--";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "--";
   return d.toLocaleTimeString(locale, { hour: "numeric", minute: "2-digit" });
 }
 
-export function localMinutesOfDay(iso: string): number {
+export function localMinutesOfDay(iso?: string | null): number {
+  if (!iso) return 0;
   const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return 0;
   return d.getHours() * 60 + d.getMinutes();
 }
 
-export function isOvernightShift(startIso: string, endIso: string): boolean {
+export function isOvernightShift(startIso?: string | null, endIso?: string | null): boolean {
+  if (!startIso || !endIso) return false;
   const s = new Date(startIso);
   const e = new Date(endIso);
+  if (Number.isNaN(s.getTime()) || Number.isNaN(e.getTime())) return false;
   return e.getDate() !== s.getDate() || e.getMonth() !== s.getMonth() || e.getFullYear() !== s.getFullYear();
 }
 
@@ -98,12 +109,13 @@ export function mapRosterToShifts(plans: RosterCleaningPlan[]): Shift[] {
   for (const plan of plans) {
     for (const shift of plan.shifts ?? []) {
       const leader = shift.assigned_workers?.[0];
+      const isVirtual = Boolean(shift.is_virtual || shift.status === "unstaffed");
       out.push({
-        id: shift.shift_id || `${plan.plan_id}-${shift.date}-${shift.start_time}`,
+        id: shift.shift_id || `${plan.plan_id}-${shift.date}-${shift.start_time || "unstaffed"}`,
         shiftId: shift.shift_id,
         planId: plan.plan_id,
         planTitle: plan.plan_title,
-        workerName: leader?.name || plan.plan_title,
+        workerName: leader?.name || (isVirtual ? "Unstaffed" : plan.plan_title),
         workerId: leader?.worker_id,
         workerRole: leader?.role,
         location: plan.location_name,
@@ -114,7 +126,7 @@ export function mapRosterToShifts(plans: RosterCleaningPlan[]): Shift[] {
         endAt: shift.end_time,
         durationMinutes: shift.duration_minutes,
         status: shift.status,
-        isVirtual: shift.is_virtual,
+        isVirtual,
         roomsCount: shift.rooms?.total ?? 0,
         roomsCompleted: shift.rooms?.completed ?? 0,
         tasksCount: shift.tasks?.total ?? 0,

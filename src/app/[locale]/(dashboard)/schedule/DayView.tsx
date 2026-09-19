@@ -170,6 +170,30 @@ export function DayView({
 
                       <div className="flex-1 relative h-full">
                         {planShifts.map((shift) => {
+                          const isUnstaffed = Boolean(
+                            shift.isVirtual || shift.status === "unstaffed" || !shift.startAt
+                          );
+
+                          if (isUnstaffed) {
+                            return (
+                              <button
+                                type="button"
+                                key={shift.id}
+                                onClick={() => setSelectedShift(shift)}
+                                className="absolute top-2 bottom-2 left-2 rounded-md flex items-center gap-1.5 px-2.5 cursor-pointer border border-dashed border-amber-300 bg-amber-50/90 text-amber-900 hover:bg-amber-100 hover:ring-2 hover:ring-amber-200 active:scale-[0.99] transition-all z-10 text-left focus-visible:outline-none"
+                                title="Not yet staffed — Schedule & specialists pending"
+                              >
+                                <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
+                                <span className="text-[11px] font-bold text-amber-900 truncate pointer-events-none select-none">
+                                  {r?.projected || "Not yet staffed"}
+                                </span>
+                                <span className="text-[10px] text-amber-700/80 pointer-events-none select-none">
+                                  (Pending schedule)
+                                </span>
+                              </button>
+                            );
+                          }
+
                           const startMin = localMinutesOfDay(shift.startAt);
                           const overnight = isOvernightShift(shift.startAt, shift.endAt);
                           const endMin = overnight
@@ -223,6 +247,10 @@ export function DayView({
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-2 rounded-full bg-[#009EE2]" />
           {r?.scheduledShift}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block h-2 w-2 rounded-full bg-amber-500 border border-amber-400" />
+          {r?.projected || "Not yet staffed"}
         </div>
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-3 w-px bg-red-500" />

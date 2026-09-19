@@ -681,26 +681,30 @@ export function getNotificationRoute(routeType?: string, locale = "en"): string 
   }
 
   
-  if (normalized.includes("schedule")) {
+  if (normalized.includes("schedule") || normalized.includes("shift")) {
     return `/${locale}/schedule`;
   }
 
-  
+  if (
+    normalized.includes("cleaning_plan") ||
+    normalized.includes("cleaning-plan") ||
+    normalized.includes("plan")
+  ) {
+    return `/${locale}/cleaning-plan`;
+  }
+
   if (normalized.includes("location")) {
     return `/${locale}/locations`;
   }
 
-  
   if (normalized.includes("room")) {
     return `/${locale}/rooms`;
   }
 
-  
   if (normalized.includes("profile")) {
     return `/${locale}/profile`;
   }
 
-  
   if (
     normalized === "overview" ||
     normalized === "home" ||
@@ -711,7 +715,6 @@ export function getNotificationRoute(routeType?: string, locale = "en"): string 
     return `/${locale}`;
   }
 
-  
   return null;
 }
 export const getClientNotifications = async (page = 1, limit = 10) =>

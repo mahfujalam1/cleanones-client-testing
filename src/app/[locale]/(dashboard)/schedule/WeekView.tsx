@@ -174,6 +174,36 @@ export function WeekView({
                           </p>
                         ) : (
                           dayShifts.map((shift) => {
+                            const isUnstaffed = Boolean(
+                              shift.isVirtual || shift.status === "unstaffed" || !shift.startAt
+                            );
+
+                            if (isUnstaffed) {
+                              return (
+                                <button
+                                  type="button"
+                                  key={shift.id}
+                                  onClick={() => setSelectedShift(shift)}
+                                  className="w-full rounded-md border border-dashed border-amber-300 bg-amber-50/90 px-2 py-1.5 text-left hover:bg-amber-100/80 transition-colors"
+                                  title="Not yet staffed — Schedule & specialists pending"
+                                >
+                                  <div className="flex items-center gap-1">
+                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
+                                    <p className="text-[11px] font-bold text-amber-900 truncate">
+                                      {r?.projected || "Not yet staffed"}
+                                    </p>
+                                  </div>
+                                  <p className="text-[10px] text-amber-700/80 mt-0.5">
+                                    Time &amp; crew pending
+                                  </p>
+                                  <p className="mt-1 text-[10px] text-slate-500 flex items-center gap-0.5 truncate">
+                                    <MdLocationOn className="text-amber-600 shrink-0" />
+                                    {shift.location}
+                                  </p>
+                                </button>
+                              );
+                            }
+
                             const overnight = isOvernightShift(shift.startAt, shift.endAt);
                             return (
                               <button

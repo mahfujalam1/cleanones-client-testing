@@ -1,13 +1,12 @@
-import { TbClock, TbMapPin, TbClipboardList, TbDoor } from "react-icons/tb";
+import { TbCalendar, TbMapPin, TbClipboardList, TbDoor } from "react-icons/tb";
 
 export function CleaningPlanCard({ plan, onDetails, t }: { plan: any; onDetails: () => void; t: any }) {
-  const dateObj = new Date(plan.date_time || plan.createdAt);
-  const formattedDate = `${dateObj.toISOString().split("T")[0]} - ${dateObj.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })}`;
+  const createdDate = plan.createdAt ? new Date(plan.createdAt).toLocaleDateString() : "";
 
   const clientName = plan.client?.name || plan.client || "Veldhoven Groep";
   const locationName = plan.location?.name || plan.location || "Campus Eindhoven";
-  const rooms = plan.rooms?.length > 0 ? plan.rooms : ["Toiletgroep", "Serverruimte"];
-  const duration = plan.max_estimated_duration || 30;
+  const rooms = plan.rooms?.length > 0 ? plan.rooms : [];
+  const duration = plan.max_estimated_duration || plan.total_duration || 30;
   const tasksCount = plan.total_tasks ?? plan.total_task ?? 0;
   const photosCount = 0;
 
@@ -37,10 +36,12 @@ export function CleaningPlanCard({ plan, onDetails, t }: { plan: any; onDetails:
             <TbMapPin className="text-[#009EE2] h-4 w-4 shrink-0" />
             <span className="truncate font-medium">{locationName}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <TbClock className="text-slate-400 h-4 w-4 shrink-0" />
-            <span>{formattedDate}</span>
-          </div>
+          {createdDate && (
+            <div className="flex items-center gap-2">
+              <TbCalendar className="text-slate-400 h-4 w-4 shrink-0" />
+              <span>Created {createdDate}</span>
+            </div>
+          )}
           <div className="flex items-start gap-2">
             <TbDoor className="text-slate-400 h-4 w-4 shrink-0 mt-0.5" />
             <p className="text-sm ">{rooms?.length} {t.cleaningPlan.rooms}</p>

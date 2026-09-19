@@ -156,21 +156,46 @@ export function MonthView({
                           isWeekend ? "bg-slate-50/50" : ""
                         }`}
                       >
-                        {dayShifts.map((shift) => (
-                          <button
-                            type="button"
-                            key={shift.id}
-                            onClick={() => setSelectedShift(shift)}
-                            className="w-full rounded border border-sky-200 bg-sky-50 px-1 py-1 text-left hover:bg-sky-100 transition-colors mb-1"
-                          >
-                            <p className="text-[10px] font-bold text-slate-800 leading-tight truncate">
-                              {shift.startTime}
-                            </p>
-                            <p className="text-[9px] text-slate-500">
-                              {hoursFromMinutes(shift.durationMinutes || 0)}h
-                            </p>
-                          </button>
-                        ))}
+                        {dayShifts.map((shift) => {
+                          const isUnstaffed = Boolean(
+                            shift.isVirtual || shift.status === "unstaffed" || !shift.startAt
+                          );
+
+                          if (isUnstaffed) {
+                            return (
+                              <button
+                                type="button"
+                                key={shift.id}
+                                onClick={() => setSelectedShift(shift)}
+                                className="w-full rounded border border-dashed border-amber-300 bg-amber-50/90 px-1 py-1 text-left hover:bg-amber-100 transition-colors mb-1"
+                                title="Not yet staffed — Schedule & specialists pending"
+                              >
+                                <p className="text-[10px] font-bold text-amber-900 leading-tight truncate">
+                                  {r?.projected || "Unstaffed"}
+                                </p>
+                                <p className="text-[9px] text-amber-700/80">
+                                  Pending
+                                </p>
+                              </button>
+                            );
+                          }
+
+                          return (
+                            <button
+                              type="button"
+                              key={shift.id}
+                              onClick={() => setSelectedShift(shift)}
+                              className="w-full rounded border border-sky-200 bg-sky-50 px-1 py-1 text-left hover:bg-sky-100 transition-colors mb-1"
+                            >
+                              <p className="text-[10px] font-bold text-slate-800 leading-tight truncate">
+                                {shift.startTime}
+                              </p>
+                              <p className="text-[9px] text-slate-500">
+                                {hoursFromMinutes(shift.durationMinutes || 0)}h
+                              </p>
+                            </button>
+                          );
+                        })}
                       </div>
                     );
                   })}
