@@ -19,9 +19,9 @@ const targetUrl = (() => {
 const nextConfig: NextConfig = {
   turbopack: {},
   skipTrailingSlashRedirect: true,
-  
-  
-  allowedDevOrigins: ["10.10.28.194", "10.10.28.195", "cleanones-client-portal.vercel.app"],
+
+
+  allowedDevOrigins: ["10.10.28.194", "10.10.28.195", "cleanones-client-portal.vercel.app", "https://cleanones-client-testing.vercel.app"],
   images: {
     remotePatterns: [
       ...(targetUrl
@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
           },
         ]
         : []),
-      
+
       { protocol: "https", hostname: "cleanones-bucket.s3.eu-central-1.amazonaws.com", pathname: "/**" },
       { protocol: "https", hostname: "*.s3.eu-central-1.amazonaws.com", pathname: "/**" },
       { protocol: "https", hostname: "*.amazonaws.com", pathname: "/**" },
