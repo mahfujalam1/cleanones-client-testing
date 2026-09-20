@@ -101,7 +101,8 @@ export function isOvernightShift(startIso?: string | null, endIso?: string | nul
 }
 
 export function hoursFromMinutes(minutes: number): string {
-  return (minutes / 60).toFixed(1);
+  if (!minutes || minutes <= 0) return "0";
+  return String(Math.ceil(minutes / 60));
 }
 
 export function mapRosterToShifts(plans: RosterCleaningPlan[]): Shift[] {

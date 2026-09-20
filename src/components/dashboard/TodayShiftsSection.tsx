@@ -44,7 +44,7 @@ function ShiftCard({ shift }: { shift: any }) {
           </b>
           <p className="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1">
             <TbClock className="text-xs" /> Starts {formatShiftTime(shift.start_time)} ·{" "}
-            {shift.estimated_hours}h estimated
+            {Math.ceil(shift.estimated_hours || 0)}h estimated
           </p>
         </div>
         <Tag color={shiftBadge.color} className="!m-0 !text-[10px] !px-2 !py-0.5">
