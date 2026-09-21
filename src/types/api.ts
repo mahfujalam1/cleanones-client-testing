@@ -230,7 +230,7 @@ export interface CreateAdditionalTaskRequest {
   cleaning_plan_id: string;
   name: string;
   description?: string;
-  duration_minutes: number;
+  duration_minutes?: number;
   is_photo_required?: boolean;
   photo_requirements?: AdditionalTaskPhotoRequirement[];
   date_time: string;

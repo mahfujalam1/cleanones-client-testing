@@ -61,7 +61,6 @@ export function RequestServiceModal({
         cleaning_plan_id: planId,
         name: name.trim(),
         description: description.trim(),
-        duration_minutes: 20,
         is_photo_required: false,
         photo_requirements: [],
         date_time: new Date(dateTime).toISOString(),
