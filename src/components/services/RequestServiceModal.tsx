@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Input, Modal, Select } from "antd";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { TbSparkles } from "react-icons/tb";
 import { useGetClientScheduleQuery } from "@/redux/apis/clientSchedule";
 import {
@@ -14,6 +16,7 @@ import { getTranslation } from "@/utils/translations";
 interface RequestServiceModalProps {
   initialTitle?: string;
   initialDescription?: string;
+  initialDate?: string;
   editingId?: string | null;
   onClose: () => void;
   onSuccess: () => void;
@@ -23,6 +26,7 @@ interface RequestServiceModalProps {
 export function RequestServiceModal({
   initialTitle = "",
   initialDescription = "",
+  initialDate = "",
   editingId = null,
   onClose,
   onSuccess,
@@ -34,7 +38,7 @@ export function RequestServiceModal({
   const [planId, setPlanId] = useState<string>("");
   const [name, setName] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
-  const [dateTime, setDateTime] = useState<string>(new Date().toISOString().slice(0, 16));
+  const [date, setDate] = useState<Dayjs | null>(initialDate ? dayjs(initialDate) : dayjs());
 
   const { data: plansRes, isFetching: loadingPlans } = useGetClientScheduleQuery({ limit: 100 });
   const plans = Array.isArray(plansRes?.data?.result) ? plansRes.data.result : [];
@@ -49,11 +53,11 @@ export function RequestServiceModal({
     }
   }, [plans, planId]);
 
-  const canSubmit = Boolean(name.trim() && planId && dateTime && !submitting);
+  const canSubmit = Boolean(name.trim() && planId && date && !submitting);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!canSubmit) return;
+    if (!canSubmit || !date) return;
     setSubmitting(true);
 
     try {
@@ -63,7 +67,7 @@ export function RequestServiceModal({
         description: description.trim(),
         is_photo_required: false,
         photo_requirements: [],
-        date_time: new Date(dateTime).toISOString(),
+        date_time: date.startOf("day").toISOString(),
       };
 
       if (editingId) {
@@ -163,12 +167,14 @@ export function RequestServiceModal({
 
           <div className="space-y-1">
             <label className="block text-xs font-semibold text-slate-700">{t.serviceCards.dateTime} *</label>
-            <Input
-              type="datetime-local"
-              value={dateTime}
-              onChange={(e) => setDateTime(e.target.value)}
-              min={new Date().toISOString().slice(0, 16)}
-              className="text-xs h-9"
+            <DatePicker
+              value={date}
+              onChange={setDate}
+              format="DD/MM/YYYY"
+              allowClear={false}
+              className="w-full h-9"
+              disabledDate={(current) => !!current && current.isBefore(dayjs(), "day")}
+              getPopupContainer={() => document.body}
             />
           </div>
 

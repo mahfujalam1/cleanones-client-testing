@@ -40,7 +40,7 @@ export interface TranslationDict {
     submitted: string; planId: string; duration: string; photo: string; time: string;
     photoRequired: string; photoTitle: string; selectPlan: string; taskName: string;
     dateTime: string; plansAvailable: string; completed: string; approved: string; pending: string;
-    yes: string; no: string;
+    yes: string; no: string; workCompleted: string; incomplete: string;
   };
   notificationsPage: {
     backTo: string; delete: string; read: string; notFound: string; backToNotifications: string;
@@ -313,8 +313,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Submitted", planId: "Plan ID", duration: "Duration", photo: "Photo", time: "Time",
       photoRequired: "Photo Required", photoTitle: "Photo Title", selectPlan: "Select Cleaning Plan",
-      taskName: "Task Name", dateTime: "Date & Time", plansAvailable: "plan(s) available",
+      taskName: "Task Name", dateTime: "Date", plansAvailable: "plan(s) available",
       completed: "Completed", approved: "Approved", pending: "Pending", yes: "Yes", no: "No",
+      workCompleted: "Work Completed", incomplete: "Incomplete",
     },
     notificationsPage: {
       backTo: "Back to notifications", delete: "Delete", read: "Read", notFound: "Notification not found",
@@ -471,8 +472,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Ingediend", planId: "Plan ID", duration: "Duur", photo: "Foto", time: "Tijd",
       photoRequired: "Foto Vereist", photoTitle: "Fototitel", selectPlan: "Selecteer Schoonmaakplan",
-      taskName: "Taaknaam", dateTime: "Datum & Tijd", plansAvailable: "plan(nen) beschikbaar",
+      taskName: "Taaknaam", dateTime: "Datum", plansAvailable: "plan(nen) beschikbaar",
       completed: "Voltooid", approved: "Goedgekeurd", pending: "In afwachting", yes: "Ja", no: "Nee",
+      workCompleted: "Werk voltooid", incomplete: "Onvolledig",
     },
     notificationsPage: {
       backTo: "Terug naar meldingen", delete: "Verwijderen", read: "Gelezen", notFound: "Melding niet gevonden",
@@ -627,8 +629,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Zgłoszono", planId: "ID Planu", duration: "Czas trwania", photo: "Zdjęcie", time: "Czas",
       photoRequired: "Zdjęcie Wymagane", photoTitle: "Tytuł Zdjęcia", selectPlan: "Wybierz Plan Sprzątania",
-      taskName: "Nazwa Zadania", dateTime: "Data i Godzina", plansAvailable: "plan(y) dostępne",
+      taskName: "Nazwa Zadania", dateTime: "Data", plansAvailable: "plan(y) dostępne",
       completed: "Ukończono", approved: "Zatwierdzono", pending: "Oczekujące", yes: "Tak", no: "Nie",
+      workCompleted: "Praca ukończona", incomplete: "Nieukończone",
     },
     notificationsPage: {
       backTo: "Powrót do powiadomień", delete: "Usuń", read: "Przeczytane", notFound: "Nie znaleziono powiadomienia",
@@ -783,8 +786,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Подано", planId: "ID Плану", duration: "Тривалість", photo: "Фото", time: "Час",
       photoRequired: "Фото Обов'язкове", photoTitle: "Назва Фото", selectPlan: "Обрати План Прибирання",
-      taskName: "Назва Завдання", dateTime: "Дата та Час", plansAvailable: "план(и) доступні",
+      taskName: "Назва Завдання", dateTime: "Дата", plansAvailable: "план(и) доступні",
       completed: "Завершено", approved: "Схвалено", pending: "Очікує", yes: "Так", no: "Ні",
+      workCompleted: "Роботу завершено", incomplete: "Незавершено",
     },
     notificationsPage: {
       backTo: "Назад до сповіщень", delete: "Видалити", read: "Прочитано", notFound: "Сповіщення не знайдено",
@@ -939,8 +943,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Submetido", planId: "ID do Plano", duration: "Duração", photo: "Foto", time: "Hora",
       photoRequired: "Foto Obrigatória", photoTitle: "Título da Foto", selectPlan: "Selecionar Plano de Limpeza",
-      taskName: "Nome da Tarefa", dateTime: "Data e Hora", plansAvailable: "plano(s) disponível(is)",
+      taskName: "Nome da Tarefa", dateTime: "Data", plansAvailable: "plano(s) disponível(is)",
       completed: "Concluído", approved: "Aprovado", pending: "Pendente", yes: "Sim", no: "Não",
+      workCompleted: "Trabalho concluído", incomplete: "Incompleto",
     },
     notificationsPage: {
       backTo: "Voltar às notificações", delete: "Eliminar", read: "Lida", notFound: "Notificação não encontrada",
@@ -1095,8 +1100,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "مُقدَّم", planId: "معرف الخطة", duration: "المدة", photo: "صورة", time: "الوقت",
       photoRequired: "صورة مطلوبة", photoTitle: "عنوان الصورة", selectPlan: "اختر خطة التنظيف",
-      taskName: "اسم المهمة", dateTime: "التاريخ والوقت", plansAvailable: "خطة/خطط متاحة",
+      taskName: "اسم المهمة", dateTime: "التاريخ", plansAvailable: "خطة/خطط متاحة",
       completed: "مكتمل", approved: "مقبول", pending: "قيد الانتظار", yes: "نعم", no: "لا",
+      workCompleted: "اكتمل العمل", incomplete: "غير مكتمل",
     },
     notificationsPage: {
       backTo: "العودة إلى الإشعارات", delete: "حذف", read: "مقروء", notFound: "لم يتم العثور على الإشعار",
@@ -1251,8 +1257,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Soumis", planId: "ID Plan", duration: "Durée", photo: "Photo", time: "Heure",
       photoRequired: "Photo Requise", photoTitle: "Titre de la Photo", selectPlan: "Sélectionner le Plan de Nettoyage",
-      taskName: "Nom de la Tâche", dateTime: "Date et Heure", plansAvailable: "plan(s) disponible(s)",
+      taskName: "Nom de la Tâche", dateTime: "Date", plansAvailable: "plan(s) disponible(s)",
       completed: "Terminé", approved: "Approuvé", pending: "En attente", yes: "Oui", no: "Non",
+      workCompleted: "Travail terminé", incomplete: "Incomplet",
     },
     notificationsPage: {
       backTo: "Retour aux notifications", delete: "Supprimer", read: "Lu", notFound: "Notification introuvable",
@@ -1407,8 +1414,9 @@ export const translations: Record<string, TranslationDict> = {
     serviceCards: {
       submitted: "Enviado", planId: "ID del Plan", duration: "Duración", photo: "Foto", time: "Hora",
       photoRequired: "Foto Requerida", photoTitle: "Título de la Foto", selectPlan: "Seleccionar Plan de Limpieza",
-      taskName: "Nombre de la Tarea", dateTime: "Fecha y Hora", plansAvailable: "plan(es) disponible(s)",
+      taskName: "Nombre de la Tarea", dateTime: "Fecha", plansAvailable: "plan(es) disponible(s)",
       completed: "Completado", approved: "Aprobado", pending: "Pendiente", yes: "Sí", no: "No",
+      workCompleted: "Trabajo completado", incomplete: "Incompleto",
     },
     notificationsPage: {
       backTo: "Volver a notificaciones", delete: "Eliminar", read: "Leído", notFound: "Notificación no encontrada",

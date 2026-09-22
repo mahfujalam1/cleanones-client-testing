@@ -2,10 +2,15 @@
 
 import React from "react";
 import { Button, Modal } from "antd";
-import { TbCamera, TbChecklist, TbClock, TbMapPin, TbCalendar } from "react-icons/tb";
+import { TbCamera, TbClock, TbCalendar } from "react-icons/tb";
 import type { AdditionalTask } from "@/types/api";
 import { useParams } from "next/navigation";
 import { getTranslation } from "@/utils/translations";
+import {
+  getRequestStatusLabel,
+  getRequestStatusTone,
+  getWorkStatusTone,
+} from "@/components/services/serviceStatus";
 
 interface ServiceDetailsModalProps {
   item: AdditionalTask;
@@ -16,6 +21,8 @@ interface ServiceDetailsModalProps {
 export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsModalProps) {
   const params = useParams();
   const t = getTranslation(params?.locale as string);
+  const requestStatus = getRequestStatusLabel(item, t.serviceCards.pending);
+  const workStatus = item.is_completed ? t.serviceCards.workCompleted : t.serviceCards.incomplete;
 
   return (
     <Modal
@@ -37,10 +44,13 @@ export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsMo
           
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h3 className="text-base font-bold text-slate-900">{item.name}</h3>
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase text-slate-600">
-                  {item.is_completed ? t.serviceCards.completed : item.is_approved ? t.serviceCards.approved : t.serviceCards.pending}
+                <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase ${getRequestStatusTone(requestStatus)}`}>
+                  {requestStatus}
+                </span>
+                <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase ${getWorkStatusTone(item.is_completed)}`}>
+                  {workStatus}
                 </span>
               </div>
 
@@ -68,7 +78,7 @@ export function ServiceDetailsModal({ item, loading, onClose }: ServiceDetailsMo
                 </div>
               </div>
             )}
-            {item.duration_minutes > 0 && (
+            {(item.duration_minutes ?? 0) > 0 && (
               <div className="flex items-start gap-1.5">
                 <TbClock className="text-slate-400 mt-0.5 shrink-0" />
                 <div>

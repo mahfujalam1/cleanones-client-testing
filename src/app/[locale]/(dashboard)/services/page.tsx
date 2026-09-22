@@ -33,8 +33,8 @@ export default function ServicesPage() {
 
   const statusOptions = [
     { value: "", label: t.services.allStatuses },
-    { value: "pending", label: t.services.stepPending },
-    { value: "approved", label: t.services.statusApproved },
+    { value: "Pending", label: t.services.stepPending },
+    { value: "Approved", label: t.services.statusApproved },
   ];
 
   const [page, setPage] = useState(1);
@@ -50,7 +50,7 @@ export default function ServicesPage() {
   const { data: servicesRes, isLoading: loading, refetch } = useGetAllAdditionalTasksQuery({
     page,
     limit,
-    ...(status === "approved" ? { is_approved: true } : status === "pending" ? { is_approved: false } : {}),
+    ...(status ? { status } : {}),
   });
 
   const [deleteAdditionalTaskMutation] = useDeleteAdditionalTaskMutation();
@@ -145,6 +145,7 @@ export default function ServicesPage() {
         <RequestServiceModal
           initialTitle={editingItem?.name || ""}
           initialDescription={editingItem?.description || ""}
+          initialDate={editingItem?.date_time || ""}
           editingId={editingItem?._id || null}
           onClose={() => {
             setShowModal(false);

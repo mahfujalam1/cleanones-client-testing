@@ -243,14 +243,27 @@ export interface AdditionalTask {
   cleaning_plan_id: string;
   name: string;
   description?: string;
-  duration_minutes: number;
+  duration_minutes: number | null;
   is_photo_required: boolean;
   photo_requirements: AdditionalTaskPhotoRequirement[];
   date_time: string;
   is_completed: boolean;
-  is_approved: boolean;
+  is_approved?: boolean;
+  status?: string;
+  reject_reason?: string | null;
   created_at?: string;
   updated_at?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  cleaning_plan?: {
+    _id: string;
+    title?: string;
+    location?: {
+      _id: string;
+      name?: string;
+      address?: string;
+    };
+  };
 }
 
 export interface GetAllAdditionalTasksParams {

@@ -1,6 +1,12 @@
 import { TbEye } from "react-icons/tb";
 import { MdOutlineChecklist, MdOutlinePlace, MdOutlineSchedule, MdModeEditOutline, MdDeleteOutline } from "react-icons/md";
 import type { AdditionalTask } from "@/types/api";
+import {
+  getRequestStatusLabel,
+  getRequestStatusTone,
+  getWorkStatusTone,
+  isAdditionalTaskEditable,
+} from "@/components/services/serviceStatus";
 
 export function ServiceCard({
   item,
@@ -15,8 +21,11 @@ export function ServiceCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
-  const statusLabel = item.is_completed ? t.serviceCards.completed : item.is_approved ? t.serviceCards.approved : t.serviceCards.pending;
-  const editable = !item.is_completed && !item.is_approved;
+  const requestStatus = getRequestStatusLabel(item, t.serviceCards.pending);
+  const workStatus = item.is_completed ? t.serviceCards.workCompleted : t.serviceCards.incomplete;
+  const editable = isAdditionalTaskEditable(item);
+  const submittedAt = item.createdAt || item.created_at;
+  const planLabel = item.cleaning_plan?.title || (item.cleaning_plan_id ? item.cleaning_plan_id.slice(-6).toUpperCase() : "");
 
   return (
     <div className="group relative h-full w-full">
@@ -30,33 +39,28 @@ export function ServiceCard({
             </span>
 
             <div className="min-w-0 flex-1 pr-12">
-              <div className="flex items-center gap-2.5">
-                <h3 className="truncate text-sm font-bold text-slate-900 transition-colors group-hover:text-sky-600">
-                  {item.name}
-                </h3>
-                <span
-                  className={`shrink-0 rounded-full px-2 py-[2px] text-[11px] font-semibold tracking-wide ${
-                    statusLabel === "Completed"
-                      ? "bg-emerald-100 text-emerald-700"
-                      : statusLabel === "Approved"
-                      ? "bg-sky-100 text-sky-700"
-                      : "bg-amber-100 text-amber-700"
-                  }`}
-                >
-                  {statusLabel}
+              <h3 className="truncate text-sm font-bold text-slate-900 transition-colors group-hover:text-sky-600">
+                {item.name}
+              </h3>
+              <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                <span className={`shrink-0 rounded-full px-2 py-[2px] text-[11px] font-semibold tracking-wide ${getRequestStatusTone(requestStatus)}`}>
+                  {requestStatus}
+                </span>
+                <span className={`shrink-0 rounded-full px-2 py-[2px] text-[11px] font-semibold tracking-wide ${getWorkStatusTone(item.is_completed)}`}>
+                  {workStatus}
                 </span>
               </div>
 
               <div className="mt-2 space-y-1">
-                {item.cleaning_plan_id && (
+                {planLabel && (
                   <p className="flex items-center gap-1.5 truncate text-xs text-slate-500">
                     <span className="shrink-0 text-sm text-slate-400"><MdOutlinePlace /></span>
-                    <span className="truncate">{t.serviceCards.planId}: {item.cleaning_plan_id.slice(-6).toUpperCase()}</span>
+                    <span className="truncate">{planLabel}</span>
                   </p>
                 )}
                 <p className="flex items-center gap-1.5 truncate text-xs text-slate-500">
                   <span className="shrink-0 text-sm text-slate-400"><MdOutlineSchedule /></span>
-                  <span className="truncate">{t.serviceCards.submitted}: {item.created_at ? new Date(item.created_at).toLocaleDateString() : (item.date_time ? new Date(item.date_time).toLocaleDateString() : "—")}</span>
+                  <span className="truncate">{t.serviceCards.submitted}: {submittedAt ? new Date(submittedAt).toLocaleDateString() : (item.date_time ? new Date(item.date_time).toLocaleDateString() : "—")}</span>
                 </p>
               </div>
             </div>
@@ -65,7 +69,7 @@ export function ServiceCard({
 
         <div className="grid grid-cols-3 divide-x divide-slate-100 border-t border-slate-100 bg-slate-50/60">
           <div className="min-w-0 px-2 py-2.5 text-center">
-            <p className="truncate text-sm font-semibold text-slate-900">{item.duration_minutes > 0 ? `${item.duration_minutes}m` : "—"}</p>
+            <p className="truncate text-sm font-semibold text-slate-900">{(item.duration_minutes ?? 0) > 0 ? `${item.duration_minutes}m` : "—"}</p>
             <p className="mt-0.5 truncate text-[11px] text-slate-400">{t.serviceCards.duration}</p>
           </div>
           <div className="min-w-0 px-2 py-2.5 text-center">
@@ -73,8 +77,8 @@ export function ServiceCard({
             <p className="mt-0.5 truncate text-[11px] text-slate-400">{t.serviceCards.photo}</p>
           </div>
           <div className="min-w-0 px-2 py-2.5 text-center">
-            <p className="truncate text-sm font-semibold text-slate-900">{item.date_time ? new Date(item.date_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "—"}</p>
-            <p className="mt-0.5 truncate text-[11px] text-slate-400">{t.serviceCards.time}</p>
+            <p className="truncate text-sm font-semibold text-slate-900">{item.date_time ? new Date(item.date_time).toLocaleDateString() : "—"}</p>
+            <p className="mt-0.5 truncate text-[11px] text-slate-400">{t.serviceCards.dateTime}</p>
           </div>
         </div>
       </article>
