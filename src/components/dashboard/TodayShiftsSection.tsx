@@ -1,6 +1,7 @@
 import { Tag } from "antd";
 import { TbBuilding, TbClock } from "react-icons/tb";
 import { formatHours, formatShiftTime } from "@/components/dashboard/dashboardHelpers";
+import { formatDurationHours } from "@/utils/duration";
 
 export function TodayShiftsSection({ shifts, todayStatus }: { shifts: any[]; todayStatus: string }) {
 
@@ -44,7 +45,7 @@ function ShiftCard({ shift }: { shift: any }) {
           </b>
           <p className="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1">
             <TbClock className="text-xs" /> Starts {formatShiftTime(shift.start_time)} ·{" "}
-            {Math.ceil(shift.estimated_hours || 0)}h estimated
+            {formatDurationHours(shift.estimated_hours || 0)} estimated
           </p>
         </div>
         <Tag color={shiftBadge.color} className="!m-0 !text-[10px] !px-2 !py-0.5">

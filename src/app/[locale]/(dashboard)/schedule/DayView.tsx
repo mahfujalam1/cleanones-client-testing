@@ -11,6 +11,7 @@ import {
   hoursFromMinutes,
 } from "./types";
 import { getTranslation } from "@/utils/translations";
+import { formatDurationMinutes, roundUpToHalfHourMinutes } from "@/utils/duration";
 import { ShiftDetailsModal } from "./ShiftDetailsModal";
 
 interface DayViewProps {
@@ -18,7 +19,7 @@ interface DayViewProps {
   plans: RosterCleaningPlan[];
   shifts: Shift[];
   totalShifts: number;
-  totalHours: number;
+  totalRoundedMinutes: number;
 }
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
@@ -38,7 +39,7 @@ export function DayView({
   plans,
   shifts,
   totalShifts,
-  totalHours,
+  totalRoundedMinutes,
 }: DayViewProps) {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
@@ -79,7 +80,7 @@ export function DayView({
           </div>
           <div className="w-px h-8 bg-white/30" />
           <div className="text-right">
-            <strong className="text-2xl font-bold">{totalHours.toFixed(1)}h</strong>
+            <strong className="text-2xl font-bold">{formatDurationMinutes(totalRoundedMinutes)}</strong>
             <span className="text-xs ml-1">{r?.durationLabel || "duration"}</span>
           </div>
         </div>
@@ -177,7 +178,7 @@ export function DayView({
 
                           if (isUnstaffed) {
                             const durationLabel = shift.durationMinutes
-                              ? `${hoursFromMinutes(shift.durationMinutes)}h`
+                              ? hoursFromMinutes(shift.durationMinutes)
                               : null;
 
                             return (
@@ -206,9 +207,13 @@ export function DayView({
 
                           const startMin = localMinutesOfDay(shift.startAt);
                           const overnight = isOvernightShift(shift.startAt, shift.endAt);
-                          const endMin = overnight
-                            ? MINUTES_IN_DAY
-                            : localMinutesOfDay(shift.endAt);
+                          const roundedMinutes = roundUpToHalfHourMinutes(shift.durationMinutes || 0);
+                          const endMin = roundedMinutes
+                            ? Math.min(startMin + roundedMinutes, MINUTES_IN_DAY)
+                            : overnight
+                              ? MINUTES_IN_DAY
+                              : localMinutesOfDay(shift.endAt);
+                          const durationLabel = hoursFromMinutes(shift.durationMinutes || 0);
                           const startFrac = (startMin / MINUTES_IN_DAY) * 100;
                           const widthFrac = Math.max(
                             ((endMin - startMin) / MINUTES_IN_DAY) * 100,
@@ -224,21 +229,19 @@ export function DayView({
                               style={{
                                 left: `${startFrac}%`,
                                 width: `${widthFrac}%`,
+                                minWidth: 96,
                                 backgroundColor: "#009EE2",
                               }}
-                              title={`${shift.startTime} → ${shift.endTime}`}
+                              title={`${shift.startTime} · ${durationLabel} estimated`}
                             >
-                              <span className="text-[11px] font-bold text-white truncate pointer-events-none select-none">
-                                {shift.startTime}
-                              </span>
-                              <span className="text-[11px] text-white/80 pointer-events-none select-none">
-                                →
-                              </span>
                               <span className="text-[11px] font-bold text-white truncate pointer-events-none select-none inline-flex items-center gap-0.5">
-                                {shift.endTime}
+                                {shift.startTime}
                                 {overnight && (
                                   <MdNightlight className="text-[10px] opacity-90" />
                                 )}
+                              </span>
+                              <span className="text-[11px] text-white/90 truncate pointer-events-none select-none">
+                                · {durationLabel}
                               </span>
                             </button>
                           );

@@ -191,7 +191,7 @@ export function MonthView({
                                 {shift.startTime}
                               </p>
                               <p className="text-[9px] text-slate-500">
-                                {hoursFromMinutes(shift.durationMinutes || 0)}h
+                                {hoursFromMinutes(shift.durationMinutes || 0)}
                               </p>
                             </button>
                           );

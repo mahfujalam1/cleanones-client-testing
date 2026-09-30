@@ -111,7 +111,7 @@ export function ShiftDetailsModal({ shift, locale, r, onClose }: ShiftDetailsMod
                 <TbClock className="text-amber-500 h-4 w-4 shrink-0" />
                 <span className="font-semibold text-slate-800">
                   {shift.durationMinutes
-                    ? `Planned Duration: ~${hoursFromMinutes(shift.durationMinutes)}h`
+                    ? `Planned Duration: ~${hoursFromMinutes(shift.durationMinutes)}`
                     : "Scheduled Visit"}
                 </span>
                 <span className="text-[11px] text-amber-700">
@@ -122,10 +122,10 @@ export function ShiftDetailsModal({ shift, locale, r, onClose }: ShiftDetailsMod
               <div className="flex items-center gap-2 text-xs text-slate-600 border-t border-slate-200/60 pt-2">
                 <TbClock className="text-slate-400 h-4 w-4 shrink-0" />
                 <span className="font-bold text-slate-800">
-                  {shift.startTime} – {shift.endTime}
+                  Start: {shift.startTime}
                 </span>
                 <span className="text-[11px] text-slate-400">
-                  ({hoursFromMinutes(shift.durationMinutes || 0)}h {r?.duration || "duration"})
+                  ({hoursFromMinutes(shift.durationMinutes || 0)} estimated)
                 </span>
               </div>
             )}

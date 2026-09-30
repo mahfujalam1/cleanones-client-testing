@@ -1,5 +1,6 @@
 import { TbClock, TbMapPin, TbUsers } from "react-icons/tb";
 import { formatShiftTime } from "@/components/dashboard/dashboardHelpers";
+import { formatDurationHours } from "@/utils/duration";
 
 export function TodayStatusPanel({
   statusConfig,
@@ -35,7 +36,7 @@ export function TodayStatusPanel({
             <p className="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
               <TbClock className="text-slate-400 text-sm shrink-0" />
               <span>
-                Start: {formatShiftTime(primaryShift.start_time)} ({Math.ceil(primaryShift.estimated_hours || 0)}h estimated)
+                Start: {formatShiftTime(primaryShift.start_time)} ({formatDurationHours(primaryShift.estimated_hours || 0)} estimated)
               </span>
             </p>
           )}

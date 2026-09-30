@@ -10,6 +10,7 @@ import {
   hoursFromMinutes,
 } from "./types";
 import { getTranslation } from "@/utils/translations";
+import { formatDurationMinutes } from "@/utils/duration";
 import { ShiftDetailsModal } from "./ShiftDetailsModal";
 
 interface WeekViewProps {
@@ -17,7 +18,7 @@ interface WeekViewProps {
   plans: RosterCleaningPlan[];
   shifts: Shift[];
   totalShifts: number;
-  totalHours: number;
+  totalRoundedMinutes: number;
 }
 
 function startOfWeekSunday(date: Date): Date {
@@ -48,7 +49,7 @@ export function WeekView({
   plans,
   shifts,
   totalShifts,
-  totalHours,
+  totalRoundedMinutes,
 }: WeekViewProps) {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
@@ -91,7 +92,7 @@ export function WeekView({
           </div>
           <div className="w-px h-8 bg-white/30" />
           <div className="text-right">
-            <strong className="text-2xl font-bold">{totalHours.toFixed(1)}</strong>
+            <strong className="text-2xl font-bold">{formatDurationMinutes(totalRoundedMinutes)}</strong>
             <span className="text-xs ml-1">{r?.scheduledHours || "scheduled hours"}</span>
           </div>
         </div>
@@ -181,7 +182,7 @@ export function WeekView({
 
                             if (isUnstaffed) {
                               const durationLabel = shift.durationMinutes
-                                ? `${hoursFromMinutes(shift.durationMinutes)}h`
+                                ? hoursFromMinutes(shift.durationMinutes)
                                 : null;
 
                               return (
@@ -229,7 +230,7 @@ export function WeekView({
                                   )}
                                 </p>
                                 <p className="text-[11px] font-semibold text-slate-600 flex items-center gap-1">
-                                  {shift.endTime}
+                                  {hoursFromMinutes(shift.durationMinutes || 0)}
                                 </p>
                                 <p className="mt-1 text-[10px] text-slate-500 flex items-center gap-0.5 truncate">
                                   <MdLocationOn className="text-[#009EE2] shrink-0" />

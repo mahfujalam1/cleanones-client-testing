@@ -16,9 +16,10 @@ import {
   ClientRosterData,
   RosterView,
   mapRosterToShifts,
-  sumPlanHours,
+  sumRoundedShiftMinutes,
 } from "./types";
 import { getTranslation } from "@/utils/translations";
+import { formatDurationMinutes } from "@/utils/duration";
 import { useParams } from "next/navigation";
 import { useGetClientRosterQuery } from "@/services/actions/client";
 
@@ -75,7 +76,7 @@ export function RosterCalendar() {
   );
   const shifts = useMemo(() => mapRosterToShifts(plans), [plans]);
   const totalShifts = rosterData?.meta?.total_shifts ?? shifts.length;
-  const totalHours = useMemo(() => sumPlanHours(plans), [plans]);
+  const totalRoundedMinutes = useMemo(() => sumRoundedShiftMinutes(plans), [plans]);
   const totalPlans = rosterData?.meta?.total ?? plans.length;
   const totalPage = rosterData?.meta?.totalPage ?? 1;
 
@@ -227,7 +228,7 @@ export function RosterCalendar() {
             {t.shiftMonitoring?.shiftsCount || "shifts"}
           </span>
           <span className="rounded border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-500 shadow-sm">
-            <strong className="font-semibold text-slate-700">{totalHours.toFixed(1)}h</strong>{" "}
+            <strong className="font-semibold text-slate-700">{formatDurationMinutes(totalRoundedMinutes)}</strong>{" "}
             {r?.duration || "Duration"}
           </span>
           <span className="rounded border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-500 shadow-sm">
@@ -253,7 +254,7 @@ export function RosterCalendar() {
             plans={plans}
             shifts={shifts}
             totalShifts={totalShifts}
-            totalHours={totalHours}
+            totalRoundedMinutes={totalRoundedMinutes}
           />
         ) : view === "month" ? (
           <MonthView
@@ -269,7 +270,7 @@ export function RosterCalendar() {
             plans={plans}
             shifts={shifts}
             totalShifts={totalShifts}
-            totalHours={totalHours}
+            totalRoundedMinutes={totalRoundedMinutes}
           />
         )}
       </div>

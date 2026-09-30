@@ -1,3 +1,5 @@
+import { roundUpToHalfHourMinutes } from "@/utils/duration";
+
 export type RosterView = "day" | "week" | "month";
 
 export type ShiftStatus =
@@ -100,10 +102,7 @@ export function isOvernightShift(startIso?: string | null, endIso?: string | nul
   return e.getDate() !== s.getDate() || e.getMonth() !== s.getMonth() || e.getFullYear() !== s.getFullYear();
 }
 
-export function hoursFromMinutes(minutes: number): string {
-  if (!minutes || minutes <= 0) return "0";
-  return String(Math.ceil(minutes / 60));
-}
+export { formatDurationMinutes as hoursFromMinutes } from "@/utils/duration";
 
 export function mapRosterToShifts(plans: RosterCleaningPlan[]): Shift[] {
   const out: Shift[] = [];
@@ -142,6 +141,12 @@ export function mapRosterToShifts(plans: RosterCleaningPlan[]): Shift[] {
   return out;
 }
 
-export function sumPlanHours(plans: RosterCleaningPlan[]): number {
-  return plans.reduce((acc, p) => acc + (p.total_hours_in_range || 0), 0);
+export function sumRoundedShiftMinutes(plans: RosterCleaningPlan[]): number {
+  return plans.reduce((total, plan) => {
+    const rounded = (plan.shifts ?? []).reduce(
+      (acc, shift) => acc + roundUpToHalfHourMinutes(shift.duration_minutes),
+      0
+    );
+    return total + rounded;
+  }, 0);
 }
