@@ -92,7 +92,7 @@ function ShiftCard({ shift }: { shift: any }) {
                     {worker.role}
                   </span>
                 </div>
-                <div className="text-right text-[10px]">
+                {/* <div className="text-right text-[10px]">
                   {(worker?.check_in_at && !worker?.check_out_at) ? (
                     <span className="font-semibold text-emerald-600">
                       {formatHours(worker.worked_hours)} logged
@@ -104,7 +104,7 @@ function ShiftCard({ shift }: { shift: any }) {
                   ) : (
                     <span className="text-slate-400">Awaiting Check-in</span>
                   )}
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
