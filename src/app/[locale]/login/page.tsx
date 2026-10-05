@@ -90,8 +90,31 @@ export default function LoginPage() {
         message.error(result.message || rootT.actionFeedback.loginFailed);
       }
     } catch (err: unknown) {
-      const errObj = err as { data?: { message?: string }; message?: string };
-      setError(errObj?.data?.message || errObj?.message || "Invalid email or password");
+      const errObj = err as {
+        status?: string | number;
+        data?: { message?: string; error?: string };
+        message?: string;
+        error?: string;
+      };
+
+      const isNetworkOrServerError =
+        errObj?.status === "FETCH_ERROR" ||
+        errObj?.status === 404 ||
+        errObj?.status === 502 ||
+        errObj?.status === 503 ||
+        (typeof errObj?.status === "number" && errObj.status >= 500);
+
+      const serverMessage =
+        errObj?.data?.message ||
+        errObj?.data?.error ||
+        (typeof errObj?.data === "string" ? errObj.data : undefined) ||
+        errObj?.message;
+
+      const fallback = isNetworkOrServerError
+        ? "Unable to connect to server. Please verify backend server is running."
+        : "Invalid email or password";
+
+      setError(serverMessage || fallback);
     }
   };
 

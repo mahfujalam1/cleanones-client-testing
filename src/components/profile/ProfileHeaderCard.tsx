@@ -23,9 +23,7 @@ export function ProfileHeaderCard({
         <ProfileAvatar data={profile} />
         <div className="min-w-0">
           <h2 className="truncate text-sm font-bold text-slate-900">{companyName}</h2>
-          <Tag color="blue" className="m-0 text-[10px]">
-            {contractType}
-          </Tag>
+
         </div>
         <Button
           icon={<TbPencil />}

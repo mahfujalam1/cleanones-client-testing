@@ -8,7 +8,7 @@ export function ProfileAccountDetailsCard({
   memberSinceLabel,
   memberSince,
   contractTypeLabel,
-  contractType,
+  // contractType,
 }: {
   title: string;
   memberSinceLabel: string;
@@ -21,7 +21,7 @@ export function ProfileAccountDetailsCard({
       <SectionTitle>{title}</SectionTitle>
       <div className="grid divide-y divide-slate-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
         <Fact label={memberSinceLabel} value={memberSince} />
-        <Fact label={contractTypeLabel} value={contractType} />
+        {/* <Fact label={contractTypeLabel} value={contractType} /> */}
       </div>
     </Card>
   );
