@@ -21,9 +21,5 @@ export const imgUrl = (url: string | null | undefined) => {
 };
 
 
-export const apiBase = () => {
-  if (typeof window !== "undefined" && window.location.protocol === "https:" && targetApi.startsWith("http:")) {
-    return "/api/proxy";
-  }
-  return targetApi || "/api/proxy";
-};
+export const apiBase = () => (typeof window === "undefined" ? targetApi : "/api/proxy");
+
